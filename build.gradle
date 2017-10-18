@@ -1,0 +1,26 @@
+apply plugin: "java"
+apply plugin: "maven"
+
+group = "net.redstoneore"
+version = "2.3.0-SNAPSHOT"
+
+repositories {
+	mavenCentral()
+	maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
+	maven { url "http://repo.dmulloy2.net/content/groups/public/" }
+	maven { url "http://repo.extendedclip.com/content/repositories/placeholderapi/" }
+}
+
+dependencies {
+	compileOnly group: "org.spigotmc", name: "spigot-api", version: "1.12.1-R0.1-SNAPSHOT";
+	compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.2.1";
+	compileOnly group: "me.clip", name: "placeholderapi", version: "2.8.2";
+
+	dependencies {
+	    compileOnly fileTree(dir: 'libs/spigot', include: ['spigot*.jar'])
+	}
+	dependencies {
+	    compileOnly fileTree(dir: 'libs/spigot', include: ['craftbukkit*.jar'])
+	}
+
+}
