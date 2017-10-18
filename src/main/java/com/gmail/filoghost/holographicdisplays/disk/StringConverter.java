@@ -21,7 +21,7 @@ public class StringConverter {
 		}
 		
 		input = UnicodeSymbols.symbolsToPlaceholders(input);
-		input = input.replace("ง", "&");
+		input = input.replace("ยง", "&");
 		return input;
 	}
 	
