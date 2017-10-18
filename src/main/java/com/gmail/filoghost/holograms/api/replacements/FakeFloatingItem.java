@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
+@SuppressWarnings("deprecation")
 public class FakeFloatingItem
   implements FloatingItem
 {

@@ -26,7 +26,7 @@ public class CraftNMSHorse extends CraftHorse {
 	}
 	
 	// Methods from Horse class
-	@Override public void setVariant(Variant variant) { }
+	@Override public void setVariant(@SuppressWarnings("deprecation") Variant variant) { }
 	@Override public void setColor(Color color) { }
 	@Override public void setStyle(Style style) { }
 	@Override public void setCarryingChest(boolean chest) { }

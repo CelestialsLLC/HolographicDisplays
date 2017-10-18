@@ -4,7 +4,6 @@ import com.gmail.filoghost.holograms.api.replacements.FakeFloatingItem;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.object.BackendAPI;
 import com.gmail.filoghost.holographicdisplays.object.CraftHologram;
-import com.gmail.filoghost.holographicdisplays.object.CraftVisibilityManager;
 import com.gmail.filoghost.holographicdisplays.object.PluginHologram;
 import com.gmail.filoghost.holographicdisplays.object.PluginHologramManager;
 import com.gmail.filoghost.holographicdisplays.util.Utils;

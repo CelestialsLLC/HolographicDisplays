@@ -3,6 +3,7 @@ package com.gmail.filoghost.holograms.api.replacements;
 import com.gmail.filoghost.holograms.api.FloatingItem;
 import org.bukkit.entity.Player;
 
+@SuppressWarnings("deprecation")
 public class OldPickupHandlerWrapper
   implements com.gmail.filoghost.holographicdisplays.api.handler.PickupHandler
 {
