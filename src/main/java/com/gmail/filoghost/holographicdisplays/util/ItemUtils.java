@@ -38,6 +38,7 @@ public class ItemUtils {
 		tempMap.put("potato",				Material.POTATO_ITEM);
 		tempMap.put("carrot",				Material.CARROT_ITEM);
 		tempMap.put("brewing stand",		Material.BREWING_STAND_ITEM);
+		tempMap.put("brewing stand item",	Material.BREWING_STAND_ITEM);
 		tempMap.put("cauldron",				Material.CAULDRON_ITEM);
 		tempMap.put("carrot on stick",		Material.CARROT_STICK);
 		tempMap.put("carrot on a stick",	Material.CARROT_STICK);
@@ -87,10 +88,13 @@ public class ItemUtils {
 	
 	@SuppressWarnings("deprecation")
 	public static Material matchMaterial(String input) {
+		input = stripSpacingChars(input).toLowerCase();
+		
 		if (CommandValidator.isInteger(input)) {
 			return Material.getMaterial(Integer.parseInt(input));
 		}
-		return materialMap.get(stripSpacingChars(input).toLowerCase());
+		
+		return materialMap.get(input);
 	}
 
 }

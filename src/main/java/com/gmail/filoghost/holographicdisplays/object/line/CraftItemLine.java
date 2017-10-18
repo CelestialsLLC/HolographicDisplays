@@ -81,6 +81,12 @@ public class CraftItemLine extends CraftTouchableLine implements ItemLine {
 		
 		if (itemStack != null && itemStack.getType() != Material.AIR) {
 			
+			// Hot fix for: https://github.com/filoghost/HolographicDisplays/issues/60
+			// TODO: fix this with some mapping earlier
+			if (itemStack.getType() == Material.BREWING_STAND) {
+				itemStack.setType(Material.BREWING_STAND_ITEM);
+			}
+			
 			double offset = getItemOffset();
 			
 			nmsItem = HolographicDisplays.getNMSManager().spawnNMSItem(world, x, y + offset, z, this, itemStack);
