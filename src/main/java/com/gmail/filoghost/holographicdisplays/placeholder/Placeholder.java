@@ -1,8 +1,13 @@
 package com.gmail.filoghost.holographicdisplays.placeholder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.plugin.Plugin;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.placeholder.PlaceholderReplacer;
+import com.gmail.filoghost.holographicdisplays.api.placeholder.PlaceholderReplacerInfo;
 
 public class Placeholder {
 	
@@ -18,13 +23,27 @@ public class Placeholder {
 	// This is the current replacement for this placeholder.
 	private String currentReplacement;
 	
-	private PlaceholderReplacer replacer;
+	private PlaceholderReplacer replacer = null;
+	
+	private PlaceholderReplacerInfo infoReplacer = null;
+	
+	private Map<Hologram, String> infoReplacerCache = new HashMap<>();	
+	private Map<Hologram, Long> infoReplacerNextUpdate = new HashMap<>();	
 	
 	public Placeholder(Plugin owner, String textPlaceholder, double refreshRate, PlaceholderReplacer replacer) {
 		this.owner = owner;
 		this.textPlaceholder = textPlaceholder;
 		this.tenthsToRefresh = refreshRate <= 0.1 ? 1 : (int) (refreshRate * 10.0);
 		this.replacer = replacer;
+		this.currentReplacement = "";
+	}
+	
+	
+	public Placeholder(Plugin owner, String textPlaceholder, double refreshRate, PlaceholderReplacerInfo replacer) {
+		this.owner = owner;
+		this.textPlaceholder = textPlaceholder;
+		this.tenthsToRefresh = refreshRate <= 0.1 ? 1 : (int) (refreshRate * 10.0);
+		this.infoReplacer = replacer;
 		this.currentReplacement = "";
 	}
 	
@@ -59,11 +78,37 @@ public class Placeholder {
 	public void setReplacer(PlaceholderReplacer replacer) {
 		this.replacer = replacer;
 	}
-
-	public void update() {
-		setCurrentReplacement(replacer.update());
+	
+	public PlaceholderReplacerInfo getInfoReplacer() {
+		return this.infoReplacer;
 	}
 	
+	public void setInfoReplacer(PlaceholderReplacerInfo replacer) {
+		this.infoReplacer = replacer;
+	}	
+
+	public void update() {
+		if (this.replacer != null) {
+			setCurrentReplacement(replacer.update());
+		}
+	}
+
+	public String update(Hologram hologram) {
+		if (this.infoReplacer == null) {
+			return null;
+		}
+		
+		if (hologram == null) {
+			return null;
+		}
+		
+		if (!this.infoReplacerNextUpdate.containsKey(hologram) || this.infoReplacerNextUpdate.get(hologram) > System.currentTimeMillis()) {
+			this.infoReplacerCache.put(hologram, this.infoReplacer.replace(hologram));
+			this.infoReplacerNextUpdate.put(hologram, System.currentTimeMillis() + 30000); // Update in 30seconds
+		}
+		
+		return this.infoReplacerCache.get(hologram);
+	}
 	
 	@Override
 	public boolean equals(Object obj) {

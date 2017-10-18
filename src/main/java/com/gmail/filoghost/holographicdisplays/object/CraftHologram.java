@@ -223,7 +223,7 @@ public class CraftHologram implements Hologram, com.gmail.filoghost.holograms.ap
 				// Now allowed, previously weren't
 				for (CraftHologramLine line : lines) {
 					if (line instanceof CraftTextLine) {
-						PlaceholdersManager.trackIfNecessary((CraftTextLine) line);
+						PlaceholdersManager.trackIfNecessary((CraftTextLine) line, this);
 					}
 				}
 				
@@ -269,7 +269,7 @@ public class CraftHologram implements Hologram, com.gmail.filoghost.holograms.ap
 				} else {
 					line.spawn(world, x, currentY, z);
 					if (allowPlaceholders && line instanceof CraftTextLine) {
-						PlaceholdersManager.trackIfNecessary((CraftTextLine) line);
+						PlaceholdersManager.trackIfNecessary((CraftTextLine) line, this);
 					}
 				}
 			}
@@ -299,7 +299,7 @@ public class CraftHologram implements Hologram, com.gmail.filoghost.holograms.ap
 			
 			line.spawn(world, x, currentY, z);
 			if (allowPlaceholders && line instanceof CraftTextLine) {
-				PlaceholdersManager.trackIfNecessary((CraftTextLine) line);
+				PlaceholdersManager.trackIfNecessary((CraftTextLine) line, this);
 			}
 		}
 	}

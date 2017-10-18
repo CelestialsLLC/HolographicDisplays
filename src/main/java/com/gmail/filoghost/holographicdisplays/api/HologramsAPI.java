@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 
 import com.gmail.filoghost.holographicdisplays.api.placeholder.PlaceholderReplacer;
+import com.gmail.filoghost.holographicdisplays.api.placeholder.PlaceholderReplacerInfo;
 import com.gmail.filoghost.holographicdisplays.object.BackendAPI;
 
 /**
@@ -51,6 +52,21 @@ public class HologramsAPI {
 	 * @return true if the registration was successfull, false if it was already registered
 	 */
 	public static boolean registerPlaceholder(Plugin plugin, String textPlaceholder, double refreshRate, PlaceholderReplacer replacer) {
+		return BackendAPI.registerPlaceholder(plugin, textPlaceholder, refreshRate, replacer);
+	}
+	
+	
+	/**
+	 * Registers a new placeholder that can be used in holograms created with commands.
+	 * With this method, you can basically expand the core of HolographicDisplays.
+	 * 
+	 * @param plugin the owner plugin of the placeholder
+	 * @param textPlaceholder the text that the placeholder will be associated to (e.g.: "{onlinePlayers}")
+	 * @param refreshRate the refresh rate of the placeholder, in seconds. Keep in mind that the minimum is 0.1 seconds, and that will be rounded to tenths of seconds
+	 * @param replacer the implementation that will return the text to replace the placeholder, where the update() method is called every <b>refreshRate</b> seconds
+	 * @return true if the registration was successfull, false if it was already registered
+	 */
+	public static boolean registerPlaceholder(Plugin plugin, String textPlaceholder, double refreshRate, PlaceholderReplacerInfo replacer) {
 		return BackendAPI.registerPlaceholder(plugin, textPlaceholder, refreshRate, replacer);
 	}
 	

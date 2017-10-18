@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import com.gmail.filoghost.holographicdisplays.HolographicDisplays;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.placeholder.PlaceholderReplacer;
 import com.gmail.filoghost.holographicdisplays.bridge.bungeecord.BungeeServerTracker;
 import com.gmail.filoghost.holographicdisplays.nms.interfaces.entity.NMSNameable;
@@ -73,7 +74,7 @@ public class PlaceholdersManager {
 					if (currentLineData.getEntity().isDeadNMS()) {
 						iter.remove();
 					} else {
-						updatePlaceholders(currentLineData);
+						updatePlaceholders(currentLineData, null);
 					}
 				}
 				
@@ -105,6 +106,10 @@ public class PlaceholdersManager {
 	}
 	
 	public static void trackIfNecessary(CraftTextLine line) {
+		trackIfNecessary(line, null);
+	}
+
+	public static void trackIfNecessary(CraftTextLine line, Hologram source) {
 		
 		NMSNameable nameableEntity = line.getNmsNameble();
 		String name = line.getText();
@@ -337,7 +342,7 @@ public class PlaceholdersManager {
 				linesToUpdate.add(lineData);
 			}
 			
-			updatePlaceholders(lineData);
+			updatePlaceholders(lineData, source);
 			
 		} else {
 			
@@ -349,14 +354,18 @@ public class PlaceholdersManager {
 	}
 	
 	
-	private static void updatePlaceholders(DynamicLineData lineData) {
+	private static void updatePlaceholders(DynamicLineData lineData, Hologram source) {
 		
 		String oldCustomName = lineData.getEntity().getCustomNameNMS();
 		String newCustomName = lineData.getOriginalName();
 		
 		if (!lineData.getPlaceholders().isEmpty()) {
 			for (Placeholder placeholder : lineData.getPlaceholders()) {
-				newCustomName = newCustomName.replace(placeholder.getTextPlaceholder(), Utils.sanitize(placeholder.getCurrentReplacement()));
+				if (placeholder.getInfoReplacer() != null) {
+					newCustomName = newCustomName.replace(placeholder.getTextPlaceholder(), Utils.sanitize(placeholder.update(source)));
+				} else {
+					newCustomName = newCustomName.replace(placeholder.getTextPlaceholder(), Utils.sanitize(placeholder.getCurrentReplacement()));
+				}
 			}
 		}
 		
