@@ -1,5 +1,6 @@
 package com.gmail.filoghost.holographicdisplays.api.placeholder;
 
+@FunctionalInterface
 public interface PlaceholderReplacer {
 
 	/**
