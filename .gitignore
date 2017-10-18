@@ -1,0 +1,7 @@
+.gradle
+libs/spigot
+/build/
+/bin/
+.settings
+.project
+.classpath
