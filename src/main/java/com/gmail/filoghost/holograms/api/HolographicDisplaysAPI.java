@@ -49,7 +49,7 @@ public class HolographicDisplaysAPI
   @Deprecated
   public static Hologram createIndividualHologram(Plugin plugin, Location source, Player whoCanSee, String... lines)
   {
-    List<Player> whoCanSeeList = new ArrayList();
+    List<Player> whoCanSeeList = new ArrayList<>();
     whoCanSeeList.add(whoCanSee);
     return createIndividualHologram(plugin, source, whoCanSeeList, lines);
   }
@@ -82,7 +82,7 @@ public class HolographicDisplaysAPI
   @Deprecated
   public static FloatingItem createIndividualFloatingItem(Plugin plugin, Location source, Player whoCanSee, ItemStack itemstack)
   {
-    List<Player> whoCanSeeList = new ArrayList();
+    List<Player> whoCanSeeList = new ArrayList<>();
     whoCanSeeList.add(whoCanSee);
     return createIndividualFloatingItem(plugin, source, whoCanSeeList, itemstack);
   }
