@@ -44,6 +44,19 @@ public class Utils extends Object {
 		return toCheck.toLowerCase().contains(content.toLowerCase());
 	}
 	
+	public static boolean containsIgnoreCase(String toCheck, String content, String... others) {
+		if (toCheck.toLowerCase().contains(content.toLowerCase())) {
+			return true;
+		}
+		
+		for (String other : others) {
+			if (toCheck.toLowerCase().contains(other.toLowerCase())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 	public static <T, V> Map<T, V> newMap() {
 		return new HashMap<T, V>();
