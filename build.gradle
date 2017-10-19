@@ -4,6 +4,9 @@ apply plugin: "maven"
 group = "net.redstoneore"
 version = "2.3.0-SNAPSHOT"
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 repositories {
 	mavenCentral()
 	maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
