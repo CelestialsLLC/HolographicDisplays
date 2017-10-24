@@ -1,0 +1,19 @@
+#.
+#.  Read the tutorial at: http://dev.bukkit.org/bukkit-plugins/holographic-displays/
+#.
+#.  Plugin created by filoghost.
+#.
+space-between-lines: 0.00
+images:
+  symbol: '[x]'
+  transparency:
+    space: ' [|] '
+    color: '&7'
+bungee:
+  refresh-seconds: 3
+  use-RedisBungee: false
+time:
+  format: dd.MM.yyyy HH:mm:ss
+  zone: GMT+3
+update-notification: true
+debug: false

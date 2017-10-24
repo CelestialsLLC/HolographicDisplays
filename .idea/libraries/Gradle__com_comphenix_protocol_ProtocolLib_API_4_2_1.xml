@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.comphenix.protocol:ProtocolLib-API:4.2.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.comphenix.protocol/ProtocolLib-API/4.2.1/b0b91e06bf9ccdaee91370bf6415d8c1711149d8/ProtocolLib-API-4.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.comphenix.protocol/ProtocolLib-API/4.2.1/66e31497668b70dc0628a5e6b2ef1e40be09fe6d/ProtocolLib-API-4.2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
