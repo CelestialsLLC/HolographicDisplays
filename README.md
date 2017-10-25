@@ -1,9 +1,9 @@
 # HolographicDisplays
 
 ### 🔧 FORK FROM REDSTONEORE
-Old-old github: <a href="https://github.com/redstone/HolographicDisplays/issues/new">here</a>
+Old-old github: <a href="https://github.com/redstone/HolographicDisplays">here</a>
 
-Here only our fixes and addons from CelestialsLLC
+Here only our fixes and addons from <a href="https://github.com/CelestialsLLC/">CelestialsLLC</a>
 
 ### 🔧 Start
 This is a maintained version of HolographicDisplays with several bug fixes. 
@@ -55,4 +55,4 @@ Old Bukkit Dev Page: http://dev.bukkit.org/bukkit-plugins/holographic-displays
 
 Old API tutorial: https://github.com/filoghost/HolographicDisplays/wiki
 
-Old-old github: <a href="https://github.com/redstone/HolographicDisplays/issues/new">here</a>
+Old-old github: <a href="https://github.com/redstone/HolographicDisplays">here</a>
