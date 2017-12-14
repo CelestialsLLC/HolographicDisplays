@@ -11,6 +11,7 @@ import com.gmail.filoghost.holographicdisplays.exception.CommandException;
 import com.gmail.filoghost.holographicdisplays.object.NamedHologram;
 import com.gmail.filoghost.holographicdisplays.object.NamedHologramManager;
 import com.gmail.filoghost.holographicdisplays.object.line.CraftHologramLine;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -203,10 +204,10 @@ public class TouchHandlerCommand extends HologramSubCommand {
     public void setShowText(CraftHologramLine line, String arguments) {
         if (line instanceof TextLine) {
             TextLine text = (TextLine) line;
-            text.setTouchHandler((Player whoClicked) -> whoClicked.sendMessage(arguments));
+            text.setTouchHandler((Player whoClicked) -> whoClicked.sendMessage(ChatColor.translateAlternateColorCodes('&', arguments)));
         } else if (line instanceof ItemLine) {
             ItemLine item = (ItemLine) line;
-            item.setTouchHandler((Player whoClicked) -> whoClicked.sendMessage(arguments));
+            item.setTouchHandler((Player whoClicked) -> whoClicked.sendMessage(ChatColor.translateAlternateColorCodes('&', arguments)));
         }
     }
 

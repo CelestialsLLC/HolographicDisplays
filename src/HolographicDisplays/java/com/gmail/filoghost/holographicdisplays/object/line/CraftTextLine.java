@@ -10,6 +10,7 @@ import com.gmail.filoghost.holographicdisplays.object.CraftHologram;
 import com.gmail.filoghost.holographicdisplays.placeholder.PlaceholdersManager;
 import com.gmail.filoghost.holographicdisplays.util.MinecraftVersion;
 import com.gmail.filoghost.holographicdisplays.util.Offsets;
+import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -64,7 +65,7 @@ public class CraftTextLine extends CraftTouchableLine implements TextLine {
     }
 
     public void setShowText(String arguments) {
-        this.setTouchHandler((Player whoClicked) -> whoClicked.sendMessage(arguments));
+        this.setTouchHandler((Player whoClicked) -> whoClicked.sendMessage(ChatColor.translateAlternateColorCodes('&', arguments)));
     }
 
     public void setDispatchCommand(String arguments) {
