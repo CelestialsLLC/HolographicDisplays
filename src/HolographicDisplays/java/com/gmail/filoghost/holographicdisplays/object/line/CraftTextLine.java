@@ -65,7 +65,10 @@ public class CraftTextLine extends CraftTouchableLine implements TextLine {
     }
 
     public void setShowText(String arguments) {
-        this.setTouchHandler((Player whoClicked) -> whoClicked.sendMessage(ChatColor.translateAlternateColorCodes('&', arguments)));
+        this.setTouchHandler(
+                (Player whoClicked) ->
+                        whoClicked.sendMessage(
+                                ChatColor.translateAlternateColorCodes('&', arguments)));
     }
 
     public void setDispatchCommand(String arguments) {

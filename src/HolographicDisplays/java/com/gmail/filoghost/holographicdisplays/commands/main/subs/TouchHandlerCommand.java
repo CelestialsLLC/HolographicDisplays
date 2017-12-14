@@ -31,10 +31,10 @@ public class TouchHandlerCommand extends HologramSubCommand {
 
     /**
      * @return arguments <>hologramName</> - [string] the name of hologram to edit <>editType</> -
-     * [string] the name of EditType (ADD, EDIT, CLEAR, CLEARALL) <>lineNumber</> - [integer]
-     * the line to change touchhandler <>showText</> - [booleam] if true showing given text,
-     * else dispatching given command by a event.getEntity() <>arguments</> - [String[]] - text
-     * or command
+     *     [string] the name of EditType (ADD, EDIT, CLEAR, CLEARALL) <>lineNumber</> - [integer]
+     *     the line to change touchhandler <>showText</> - [booleam] if true showing given text,
+     *     else dispatching given command by a event.getEntity() <>arguments</> - [String[]] - text
+     *     or command
      */
     @Override
     public String getPossibleArguments() {
@@ -204,10 +204,16 @@ public class TouchHandlerCommand extends HologramSubCommand {
     public void setShowText(CraftHologramLine line, String arguments) {
         if (line instanceof TextLine) {
             TextLine text = (TextLine) line;
-            text.setTouchHandler((Player whoClicked) -> whoClicked.sendMessage(ChatColor.translateAlternateColorCodes('&', arguments)));
+            text.setTouchHandler(
+                    (Player whoClicked) ->
+                            whoClicked.sendMessage(
+                                    ChatColor.translateAlternateColorCodes('&', arguments)));
         } else if (line instanceof ItemLine) {
             ItemLine item = (ItemLine) line;
-            item.setTouchHandler((Player whoClicked) -> whoClicked.sendMessage(ChatColor.translateAlternateColorCodes('&', arguments)));
+            item.setTouchHandler(
+                    (Player whoClicked) ->
+                            whoClicked.sendMessage(
+                                    ChatColor.translateAlternateColorCodes('&', arguments)));
         }
     }
 
