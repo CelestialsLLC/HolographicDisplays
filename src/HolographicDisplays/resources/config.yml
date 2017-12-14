@@ -3,7 +3,9 @@
 #.
 #.  Plugin created by filoghost.
 #.
-space-between-lines: 0.00
+removeLineSpaces: false # default: false
+lineLengthAnalysis: false # default: false
+
 images:
   symbol: '[x]'
   transparency:

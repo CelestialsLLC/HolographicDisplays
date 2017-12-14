@@ -25,14 +25,26 @@ public class HelpCommand extends HologramSubCommand {
 
     public static void sendHoverTip(CommandSender sender) {
         sender.sendMessage("");
-        HolographicDisplays.getNMSManager().newFancyMessage("TIP").style(ChatColor.BOLD).color(ChatColor.YELLOW)
-                .then(" Try to ").color(ChatColor.GRAY)
-                .then("hover").color(ChatColor.WHITE).style(ChatColor.ITALIC, ChatColor.UNDERLINE)
+        HolographicDisplays.getNMSManager()
+                .newFancyMessage("TIP")
+                .style(ChatColor.BOLD)
+                .color(ChatColor.YELLOW)
+                .then(" Try to ")
+                .color(ChatColor.GRAY)
+                .then("hover")
+                .color(ChatColor.WHITE)
+                .style(ChatColor.ITALIC, ChatColor.UNDERLINE)
                 .tooltip(ChatColor.LIGHT_PURPLE + "Hover on the commands to get info about them.")
-                .then(" or ").color(ChatColor.GRAY)
-                .then("click").color(ChatColor.WHITE).style(ChatColor.ITALIC, ChatColor.UNDERLINE)
-                .tooltip(ChatColor.LIGHT_PURPLE + "Click on the commands to insert them in the chat.")
-                .then(" on the commands!").color(ChatColor.GRAY)
+                .then(" or ")
+                .color(ChatColor.GRAY)
+                .then("click")
+                .color(ChatColor.WHITE)
+                .style(ChatColor.ITALIC, ChatColor.UNDERLINE)
+                .tooltip(
+                        ChatColor.LIGHT_PURPLE
+                                + "Click on the commands to insert them in the chat.")
+                .then(" on the commands!")
+                .color(ChatColor.GRAY)
                 .send((Player) sender);
     }
 
@@ -52,7 +64,14 @@ public class HelpCommand extends HologramSubCommand {
         sender.sendMessage(Strings.formatTitle("Holographic Displays Commands"));
         for (HologramSubCommand subCommand : mainCommandHandler.getSubCommands()) {
             if (subCommand.getType() == SubCommandType.GENERIC) {
-                String usage = "/" + label + " " + subCommand.getName() + (subCommand.getPossibleArguments().length() > 0 ? " " + subCommand.getPossibleArguments() : "");
+                String usage =
+                        "/"
+                                + label
+                                + " "
+                                + subCommand.getName()
+                                + (subCommand.getPossibleArguments().length() > 0
+                                ? " " + subCommand.getPossibleArguments()
+                                : "");
 
                 if (CommandValidator.isPlayerSender(sender)) {
 
@@ -62,7 +81,8 @@ public class HelpCommand extends HologramSubCommand {
                         help.add(Colors.SECONDARY_SHADOW + tutLine);
                     }
 
-                    HolographicDisplays.getNMSManager().newFancyMessage(usage)
+                    HolographicDisplays.getNMSManager()
+                            .newFancyMessage(usage)
                             .color(ChatColor.AQUA)
                             .suggest(usage)
                             .tooltip(Utils.join(help, "\n"))
@@ -88,6 +108,4 @@ public class HelpCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.HIDDEN;
     }
-
-
 }

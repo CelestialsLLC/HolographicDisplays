@@ -11,5 +11,4 @@ public class StartupLoadHologramsTask implements Runnable {
             hologram.refreshAll();
         }
     }
-
 }

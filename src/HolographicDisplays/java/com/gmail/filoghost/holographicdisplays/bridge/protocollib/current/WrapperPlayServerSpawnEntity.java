@@ -47,7 +47,9 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
     // Useful constructor
     private static PacketContainer fromEntity(Entity entity, int type, int objectData) {
         if (entityConstructor == null)
-            entityConstructor = ProtocolLibrary.getProtocolManager().createPacketConstructor(TYPE, entity, type, objectData);
+            entityConstructor =
+                    ProtocolLibrary.getProtocolManager()
+                            .createPacketConstructor(TYPE, entity, type, objectData);
         return entityConstructor.createPacket(entity, type, objectData);
     }
 
@@ -151,5 +153,4 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
             return INSTANCE;
         }
     }
-
 }

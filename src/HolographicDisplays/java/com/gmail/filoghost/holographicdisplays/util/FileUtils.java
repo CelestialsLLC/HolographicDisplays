@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class FileUtils {
 
     public static List<String> readLines(File file) throws Exception {

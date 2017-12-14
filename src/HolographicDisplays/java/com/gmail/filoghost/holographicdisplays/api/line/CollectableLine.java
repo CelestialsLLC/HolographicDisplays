@@ -20,5 +20,4 @@ public interface CollectableLine extends HologramLine {
      * @param pickupHandler the new PickupHandler, can be null.
      */
     void setPickupHandler(PickupHandler pickupHandler);
-
 }

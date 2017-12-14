@@ -4,5 +4,4 @@ public interface NMSCanMount extends NMSEntityBase {
 
     // Sets the passenger of this entity through NMS.
     void setPassengerOfNMS(NMSEntityBase vehicleBase);
-
 }

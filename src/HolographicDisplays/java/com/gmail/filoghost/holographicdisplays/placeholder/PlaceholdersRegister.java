@@ -18,25 +18,45 @@ public class PlaceholdersRegister {
 
     // Register the default placeholders statically.
     static {
+        register(
+                new Placeholder(
+                        HolographicDisplays.getInstance(),
+                        "{online}",
+                        1.0,
+                        () -> String.valueOf(VersionUtils.getOnlinePlayers().size())));
 
-        register(new Placeholder(HolographicDisplays.getInstance(), "{online}", 1.0, () -> String.valueOf(VersionUtils.getOnlinePlayers().size())));
+        register(
+                new Placeholder(
+                        HolographicDisplays.getInstance(),
+                        "{max_players}",
+                        10.0,
+                        () -> String.valueOf(Bukkit.getMaxPlayers())));
 
-        register(new Placeholder(HolographicDisplays.getInstance(), "{max_players}", 10.0, () -> String.valueOf(Bukkit.getMaxPlayers())));
+        register(
+                new Placeholder(
+                        HolographicDisplays.getInstance(), "{motd}", 60.0, () -> Bukkit.getMotd()));
 
-        register(new Placeholder(HolographicDisplays.getInstance(), "{motd}", 60.0, () -> Bukkit.getMotd()));
+        register(
+                new Placeholder(
+                        HolographicDisplays.getInstance(),
+                        "{time}",
+                        0.9,
+                        () -> Configuration.timeFormat.format(new Date())));
 
-        register(new Placeholder(HolographicDisplays.getInstance(), "{time}", 0.9, () -> Configuration.timeFormat.format(new Date())));
-
-        register(new Placeholder(HolographicDisplays.getInstance(), "&u", 0.2, new CyclicPlaceholderReplacer(Utils.arrayToStrings(
-                ChatColor.RED,
-                ChatColor.GOLD,
-                ChatColor.YELLOW,
-                ChatColor.GREEN,
-                ChatColor.AQUA,
-                ChatColor.LIGHT_PURPLE
-        ))));
+        register(
+                new Placeholder(
+                        HolographicDisplays.getInstance(),
+                        "&u",
+                        0.2,
+                        new CyclicPlaceholderReplacer(
+                                Utils.arrayToStrings(
+                                        ChatColor.RED,
+                                        ChatColor.GOLD,
+                                        ChatColor.YELLOW,
+                                        ChatColor.GREEN,
+                                        ChatColor.AQUA,
+                                        ChatColor.LIGHT_PURPLE))));
     }
-
 
     public static boolean register(Placeholder placeholder) {
         if (placeholders.contains(placeholder)) {
@@ -66,7 +86,8 @@ public class PlaceholdersRegister {
         while (iter.hasNext()) {
             Placeholder placeholder = iter.next();
 
-            if (placeholder.getOwner().equals(plugin) && placeholder.getTextPlaceholder().equals(textPlaceholder)) {
+            if (placeholder.getOwner().equals(plugin)
+                    && placeholder.getTextPlaceholder().equals(textPlaceholder)) {
                 iter.remove();
 
                 for (DynamicLineData data : PlaceholdersManager.linesToUpdate) {
@@ -85,5 +106,4 @@ public class PlaceholdersRegister {
     protected static Set<Placeholder> getPlaceholders() {
         return placeholders;
     }
-
 }

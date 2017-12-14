@@ -33,7 +33,8 @@ public class HolographicDisplaysAPI {
     }
 
     @Deprecated
-    public static FloatingItem createFloatingItem(Plugin plugin, Location source, ItemStack itemstack) {
+    public static FloatingItem createFloatingItem(
+            Plugin plugin, Location source, ItemStack itemstack) {
         Validator.notNull(itemstack, "itemstack");
         Validator.isTrue(itemstack.getType() != Material.AIR, "itemstack cannot be AIR");
 
@@ -43,14 +44,16 @@ public class HolographicDisplaysAPI {
     }
 
     @Deprecated
-    public static Hologram createIndividualHologram(Plugin plugin, Location source, Player whoCanSee, String... lines) {
+    public static Hologram createIndividualHologram(
+            Plugin plugin, Location source, Player whoCanSee, String... lines) {
         List<Player> whoCanSeeList = new ArrayList<>();
         whoCanSeeList.add(whoCanSee);
         return createIndividualHologram(plugin, source, whoCanSeeList, lines);
     }
 
     @Deprecated
-    public static Hologram createIndividualHologram(Plugin plugin, Location source, List<Player> whoCanSee, String... lines) {
+    public static Hologram createIndividualHologram(
+            Plugin plugin, Location source, List<Player> whoCanSee, String... lines) {
         Validator.notNull(plugin, "plugin");
         Validator.notNull(source, "source");
         Validator.notNull(source.getWorld(), "source's world");
@@ -73,14 +76,16 @@ public class HolographicDisplaysAPI {
     }
 
     @Deprecated
-    public static FloatingItem createIndividualFloatingItem(Plugin plugin, Location source, Player whoCanSee, ItemStack itemstack) {
+    public static FloatingItem createIndividualFloatingItem(
+            Plugin plugin, Location source, Player whoCanSee, ItemStack itemstack) {
         List<Player> whoCanSeeList = new ArrayList<>();
         whoCanSeeList.add(whoCanSee);
         return createIndividualFloatingItem(plugin, source, whoCanSeeList, itemstack);
     }
 
     @Deprecated
-    public static FloatingItem createIndividualFloatingItem(Plugin plugin, Location source, List<Player> whoCanSee, ItemStack itemstack) {
+    public static FloatingItem createIndividualFloatingItem(
+            Plugin plugin, Location source, List<Player> whoCanSee, ItemStack itemstack) {
         Validator.notNull(plugin, "plugin cannot be null");
         Validator.notNull(source, "source cannot be null");
         Validator.notNull(source.getWorld(), "source's world cannot be null");

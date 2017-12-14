@@ -12,5 +12,4 @@ public interface ProtocolLibHook {
     void sendDestroyEntitiesPacket(Player player, CraftHologram hologram);
 
     void sendCreateEntitiesPacket(Player player, CraftHologram hologram);
-
 }

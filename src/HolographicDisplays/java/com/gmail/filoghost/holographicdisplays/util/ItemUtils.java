@@ -73,7 +73,8 @@ public class ItemUtils {
         tempMap.put("dye", Material.INK_SACK);
 
         for (Entry<String, Material> tempEntry : tempMap.entrySet()) {
-            materialMap.put(stripSpacingChars(tempEntry.getKey()).toLowerCase(), tempEntry.getValue());
+            materialMap.put(
+                    stripSpacingChars(tempEntry.getKey()).toLowerCase(), tempEntry.getValue());
         }
 
         for (Material mat : Material.values()) {
@@ -95,5 +96,4 @@ public class ItemUtils {
 
         return materialMap.get(input);
     }
-
 }

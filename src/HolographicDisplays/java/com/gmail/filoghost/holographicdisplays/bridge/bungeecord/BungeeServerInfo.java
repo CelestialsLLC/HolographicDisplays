@@ -78,5 +78,4 @@ public class BungeeServerInfo {
     public void updateLastRequest() {
         this.lastRequest = System.currentTimeMillis();
     }
-
 }

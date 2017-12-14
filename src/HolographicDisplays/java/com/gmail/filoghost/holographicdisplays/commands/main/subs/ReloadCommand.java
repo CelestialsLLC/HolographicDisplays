@@ -64,14 +64,27 @@ public class ReloadCommand extends HologramSubCommand {
             if (savedHolograms != null && savedHolograms.size() > 0) {
                 for (String singleSavedHologram : savedHolograms) {
                     try {
-                        NamedHologram singleHologramEntity = HologramDatabase.loadHologram(singleSavedHologram);
+                        NamedHologram singleHologramEntity =
+                                HologramDatabase.loadHologram(singleSavedHologram);
                         NamedHologramManager.addHologram(singleHologramEntity);
                     } catch (HologramNotFoundException e) {
-                        Strings.sendWarning(sender, "Hologram '" + singleSavedHologram + "' not found, skipping it.");
+                        Strings.sendWarning(
+                                sender,
+                                "Hologram '" + singleSavedHologram + "' not found, skipping it.");
                     } catch (InvalidFormatException e) {
-                        Strings.sendWarning(sender, "Hologram '" + singleSavedHologram + "' has an invalid location format.");
+                        Strings.sendWarning(
+                                sender,
+                                "Hologram '"
+                                        + singleSavedHologram
+                                        + "' has an invalid location format.");
                     } catch (WorldNotFoundException e) {
-                        Strings.sendWarning(sender, "Hologram '" + singleSavedHologram + "' was in the world '" + e.getMessage() + "' but it wasn't loaded.");
+                        Strings.sendWarning(
+                                sender,
+                                "Hologram '"
+                                        + singleSavedHologram
+                                        + "' was in the world '"
+                                        + e.getMessage()
+                                        + "' but it wasn't loaded.");
                     }
                 }
             }
@@ -82,11 +95,16 @@ public class ReloadCommand extends HologramSubCommand {
 
             long endMillis = System.currentTimeMillis();
 
-            sender.sendMessage(Colors.PRIMARY + "Configuration reloaded successfully in " + (endMillis - startMillis) + "ms!");
+            sender.sendMessage(
+                    Colors.PRIMARY
+                            + "Configuration reloaded successfully in "
+                            + (endMillis - startMillis)
+                            + "millis!");
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new CommandException("Exception while reloading the configuration. Please look the console.");
+            throw new CommandException(
+                    "Exception while reloading the configuration. Please look the console.");
         }
 
         Bukkit.getPluginManager().callEvent(new HolographicDisplaysReloadEvent());
@@ -101,5 +119,4 @@ public class ReloadCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.GENERIC;
     }
-
 }

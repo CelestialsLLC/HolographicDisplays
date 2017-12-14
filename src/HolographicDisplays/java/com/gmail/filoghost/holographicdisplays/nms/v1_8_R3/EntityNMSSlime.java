@@ -77,7 +77,12 @@ public class EntityNMSSlime extends EntitySlime implements NMSSlime {
         if (damageSource instanceof EntityDamageSource) {
             EntityDamageSource entityDamageSource = (EntityDamageSource) damageSource;
             if (entityDamageSource.getEntity() instanceof EntityPlayer) {
-                Bukkit.getPluginManager().callEvent(new PlayerInteractEntityEvent(((EntityPlayer) entityDamageSource.getEntity()).getBukkitEntity(), getBukkitEntity()));
+                Bukkit.getPluginManager()
+                        .callEvent(
+                                new PlayerInteractEntityEvent(
+                                        ((EntityPlayer) entityDamageSource.getEntity())
+                                                .getBukkitEntity(),
+                                        getBukkitEntity()));
             }
         }
         return false;

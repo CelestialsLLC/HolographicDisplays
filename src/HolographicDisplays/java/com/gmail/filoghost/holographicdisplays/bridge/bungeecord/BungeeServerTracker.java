@@ -124,7 +124,9 @@ public class BungeeServerTracker {
         BungeeServerInfo info = trackedServers.get(server);
         if (info != null) {
             info.updateLastRequest();
-            return info.isOnline() ? Configuration.pingerStatusOnline : Configuration.pingerStatusOffline;
+            return info.isOnline()
+                    ? Configuration.pingerStatusOnline
+                    : Configuration.pingerStatusOffline;
         } else {
             // It was not tracked, add it.
             track(server);
@@ -142,58 +144,88 @@ public class BungeeServerTracker {
             Bukkit.getScheduler().cancelTask(taskID);
         }
 
-        taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(HolographicDisplays.getInstance(), () -> {
+        taskID =
+                Bukkit.getScheduler()
+                        .scheduleSyncRepeatingTask(
+                                HolographicDisplays.getInstance(),
+                                () -> {
+                                    if (Configuration.pingerEnable) {
+                                        new BukkitRunnable() {
 
-            if (Configuration.pingerEnable) {
-                new BukkitRunnable() {
+                                            @Override
+                                            public void run() {
+                                                for (Entry<String, ServerAddress> entry :
+                                                        Configuration.pingerServers.entrySet()) {
 
-                    @Override
-                    public void run() {
-                        for (Entry<String, ServerAddress> entry : Configuration.pingerServers.entrySet()) {
+                                                    BungeeServerInfo serverInfo =
+                                                            getOrCreateServerInfo(entry.getKey());
+                                                    boolean displayOffline = false;
 
-                            BungeeServerInfo serverInfo = getOrCreateServerInfo(entry.getKey());
-                            boolean displayOffline = false;
+                                                    try {
+                                                        PingResponse data =
+                                                                ServerPinger.fetchData(
+                                                                        entry.getValue(),
+                                                                        Configuration
+                                                                                .pingerTimeout);
 
-                            try {
-                                PingResponse data = ServerPinger.fetchData(entry.getValue(), Configuration.pingerTimeout);
+                                                        if (data.isOnline()) {
+                                                            serverInfo.setOnline(true);
+                                                            serverInfo.setOnlinePlayers(
+                                                                    data.getOnlinePlayers());
+                                                            serverInfo.setMaxPlayers(
+                                                                    data.getMaxPlayers());
+                                                            serverInfo.setMotd(data.getMotd());
+                                                        } else {
+                                                            displayOffline = true;
+                                                        }
+                                                    } catch (SocketTimeoutException e) {
+                                                        displayOffline = true;
+                                                    } catch (UnknownHostException e) {
+                                                        HolographicDisplays.getInstance()
+                                                                .getLogger()
+                                                                .warning(
+                                                                        "Couldn't fetch data from "
+                                                                                + entry.getKey()
+                                                                                + "("
+                                                                                + entry.getValue()
+                                                                                .toString()
+                                                                                + "): unknown host address.");
+                                                        displayOffline = true;
+                                                    } catch (IOException e) {
+                                                        displayOffline = true;
+                                                    } catch (Exception e) {
+                                                        displayOffline = true;
+                                                        HolographicDisplays.getInstance()
+                                                                .getLogger()
+                                                                .warning(
+                                                                        "Couldn't fetch data from "
+                                                                                + entry.getKey()
+                                                                                + "("
+                                                                                + entry.getValue()
+                                                                                .toString()
+                                                                                + "), unhandled exception: "
+                                                                                + e.toString());
+                                                        DebugHandler.handleDebugException(e);
+                                                    }
 
-                                if (data.isOnline()) {
-                                    serverInfo.setOnline(true);
-                                    serverInfo.setOnlinePlayers(data.getOnlinePlayers());
-                                    serverInfo.setMaxPlayers(data.getMaxPlayers());
-                                    serverInfo.setMotd(data.getMotd());
-                                } else {
-                                    displayOffline = true;
-                                }
-                            } catch (SocketTimeoutException e) {
-                                displayOffline = true;
-                            } catch (UnknownHostException e) {
-                                HolographicDisplays.getInstance().getLogger().warning("Couldn't fetch data from " + entry.getKey() + "(" + entry.getValue().toString() + "): unknown host address.");
-                                displayOffline = true;
-                            } catch (IOException e) {
-                                displayOffline = true;
-                            } catch (Exception e) {
-                                displayOffline = true;
-                                HolographicDisplays.getInstance().getLogger().warning("Couldn't fetch data from " + entry.getKey() + "(" + entry.getValue().toString() + "), unhandled exception: " + e.toString());
-                                DebugHandler.handleDebugException(e);
-                            }
+                                                    if (displayOffline) {
+                                                        serverInfo.setOnline(false);
+                                                        serverInfo.setOnlinePlayers(0);
+                                                        serverInfo.setMaxPlayers(0);
+                                                        serverInfo.setMotd(
+                                                                Configuration.pingerOfflineMotd);
+                                                    }
+                                                }
+                                            }
+                                        }.runTaskAsynchronously(HolographicDisplays.getInstance());
 
-                            if (displayOffline) {
-                                serverInfo.setOnline(false);
-                                serverInfo.setOnlinePlayers(0);
-                                serverInfo.setMaxPlayers(0);
-                                serverInfo.setMotd(Configuration.pingerOfflineMotd);
-                            }
-                        }
-                    }
-                }.runTaskAsynchronously(HolographicDisplays.getInstance());
-
-            } else {
-                for (String server : trackedServers.keySet()) {
-                    BungeeChannel.getInstance().askPlayerCount(server);
-                }
-            }
-
-        }, 1, refreshSeconds * 20);
+                                    } else {
+                                        for (String server : trackedServers.keySet()) {
+                                            BungeeChannel.getInstance().askPlayerCount(server);
+                                        }
+                                    }
+                                },
+                                1,
+                                refreshSeconds * 20);
     }
 }

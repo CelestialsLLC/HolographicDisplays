@@ -7,5 +7,4 @@ public interface NMSNameable extends NMSEntityBase {
 
     // Sets a custom name for this entity.
     void setCustomNameNMS(String name);
-
 }

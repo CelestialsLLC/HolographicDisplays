@@ -35,7 +35,6 @@ public class SetlineCommand extends HologramSubCommand {
         return 3;
     }
 
-
     @Override
     public void execute(CommandSender sender, String label, String[] args) throws CommandException {
         NamedHologram hologram = NamedHologramManager.getHologram(args[0].toLowerCase());
@@ -44,7 +43,8 @@ public class SetlineCommand extends HologramSubCommand {
 
         // Check material validity
         if (line.toLowerCase().startsWith("icon:")) {
-            String iconMaterial = ItemUtils.stripSpacingChars(line.substring("icon:".length(), line.length()));
+            String iconMaterial =
+                    ItemUtils.stripSpacingChars(line.substring("icon:".length(), line.length()));
 
             if (iconMaterial.contains(":")) {
                 iconMaterial = iconMaterial.split(":")[0];
@@ -55,7 +55,9 @@ public class SetlineCommand extends HologramSubCommand {
         }
 
         int lineNumber = CommandValidator.getInteger(args[1]);
-        CommandValidator.isTrue(lineNumber >= 1 && lineNumber <= hologram.size(), "The line number must be between 1 and " + hologram.size() + ".");
+        CommandValidator.isTrue(
+                lineNumber >= 1 && lineNumber <= hologram.size(),
+                "The line number must be between 1 and " + hologram.size() + ".");
         int index = lineNumber - 1;
 
         hologram.getLinesUnsafe().get(index).despawn();
@@ -66,7 +68,6 @@ public class SetlineCommand extends HologramSubCommand {
         HologramDatabase.trySaveToDisk();
         sender.sendMessage(Colors.PRIMARY + "Line " + lineNumber + " changed!");
         Bukkit.getPluginManager().callEvent(new NamedHologramEditedEvent(hologram));
-
     }
 
     @Override
@@ -78,5 +79,4 @@ public class SetlineCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.EDIT_LINES;
     }
-
 }

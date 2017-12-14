@@ -166,5 +166,4 @@ public class CraftNMSArmorStand extends CraftArmorStand {
     @Override
     public void setCustomNameVisible(boolean flag) {
     }
-
 }

@@ -40,6 +40,7 @@ public class HologramsCommandHandler implements CommandExecutor {
         registerSubCommand(new ReadtextCommand());
         registerSubCommand(new ReadimageCommand());
         registerSubCommand(new InfoCommand());
+        registerSubCommand(new TouchHandlerCommand());
 
         registerSubCommand(new HelpCommand(this));
     }
@@ -56,9 +57,25 @@ public class HologramsCommandHandler implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (args.length == 0) {
-            sender.sendMessage(Colors.PRIMARY_SHADOW + "Server is running " + Colors.PRIMARY + "Holographic Displays " + Colors.PRIMARY_SHADOW + "v" + HolographicDisplays.getInstance().getDescription().getVersion() + " by " + Colors.PRIMARY + "filoghost");
+            sender.sendMessage(
+                    Colors.PRIMARY_SHADOW
+                            + "Server is running "
+                            + Colors.PRIMARY
+                            + "Holographic Displays "
+                            + Colors.PRIMARY_SHADOW
+                            + "v"
+                            + HolographicDisplays.getInstance().getDescription().getVersion()
+                            + " by "
+                            + Colors.PRIMARY
+                            + "filoghost");
             if (sender.hasPermission(Strings.BASE_PERM + "help")) {
-                sender.sendMessage(Colors.PRIMARY_SHADOW + "Commands: " + Colors.PRIMARY + "/" + label + " help");
+                sender.sendMessage(
+                        Colors.PRIMARY_SHADOW
+                                + "Commands: "
+                                + Colors.PRIMARY
+                                + "/"
+                                + label
+                                + " help");
             }
             return true;
         }
@@ -78,14 +95,25 @@ public class HologramsCommandHandler implements CommandExecutor {
                         sender.sendMessage(Colors.ERROR + e.getMessage());
                     }
                 } else {
-                    sender.sendMessage(Colors.ERROR + "Usage: /" + label + " " + subCommand.getName() + " " + subCommand.getPossibleArguments());
+                    sender.sendMessage(
+                            Colors.ERROR
+                                    + "Usage: /"
+                                    + label
+                                    + " "
+                                    + subCommand.getName()
+                                    + " "
+                                    + subCommand.getPossibleArguments());
                 }
 
                 return true;
             }
         }
 
-        sender.sendMessage(Colors.ERROR + "Unknown sub-command. Type \"/" + label + " help\" for a list of commands.");
+        sender.sendMessage(
+                Colors.ERROR
+                        + "Unknown sub-command. Type \"/"
+                        + label
+                        + " help\" for a list of commands.");
         return true;
     }
 }

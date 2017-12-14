@@ -12,5 +12,4 @@ public interface NMSItem extends NMSEntityBase, NMSCanMount {
 
     // The raw NMS ItemStack object.
     Object getRawItemStack();
-
 }

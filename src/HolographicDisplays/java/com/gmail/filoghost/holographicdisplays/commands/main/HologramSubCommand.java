@@ -41,7 +41,8 @@ public abstract class HologramSubCommand {
 
     public abstract int getMinimumArguments();
 
-    public abstract void execute(CommandSender sender, String label, String[] args) throws CommandException;
+    public abstract void execute(CommandSender sender, String label, String[] args)
+            throws CommandException;
 
     public abstract List<String> getTutorial();
 
@@ -63,9 +64,9 @@ public abstract class HologramSubCommand {
         return false;
     }
 
-
     public enum SubCommandType {
-        GENERIC, EDIT_LINES, HIDDEN
+        GENERIC,
+        EDIT_LINES,
+        HIDDEN
     }
-
 }

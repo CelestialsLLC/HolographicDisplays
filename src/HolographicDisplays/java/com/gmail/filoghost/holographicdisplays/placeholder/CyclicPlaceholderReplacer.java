@@ -23,5 +23,4 @@ public class CyclicPlaceholderReplacer implements PlaceholderReplacer {
 
         return result;
     }
-
 }

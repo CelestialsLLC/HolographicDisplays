@@ -45,12 +45,15 @@ public class ReadtextCommand extends HologramSubCommand {
         CommandValidator.notNull(hologram, Strings.noSuchHologram(args[0].toLowerCase()));
 
         try {
-            List<String> lines = FileUtils.readLines(new File(HolographicDisplays.getInstance().getDataFolder(), args[1]));
+            List<String> lines =
+                    FileUtils.readLines(
+                            new File(HolographicDisplays.getInstance().getDataFolder(), args[1]));
             hologram.clearLines();
 
             int linesAmount = lines.size();
             if (linesAmount > 40) {
-                Strings.sendWarning(sender, "The file contained more than 40 lines, that have been limited.");
+                Strings.sendWarning(
+                        sender, "The file contained more than 40 lines, that have been limited.");
                 linesAmount = 40;
             }
 
@@ -65,7 +68,11 @@ public class ReadtextCommand extends HologramSubCommand {
 
             if (args[1].contains(".")) {
                 if (isImageExtension(args[1].substring(args[1].lastIndexOf('.') + 1))) {
-                    Strings.sendWarning(sender, "The read file has an image's extension. If it is an image, you should use /" + label + " readimage.");
+                    Strings.sendWarning(
+                            sender,
+                            "The read file has an image's extension. If it is an image, you should use /"
+                                    + label
+                                    + " readimage.");
                 }
             }
 
@@ -73,18 +80,21 @@ public class ReadtextCommand extends HologramSubCommand {
             Bukkit.getPluginManager().callEvent(new NamedHologramEditedEvent(hologram));
 
         } catch (FileNotFoundException e) {
-            throw new CommandException("A file named '" + args[1] + "' doesn't exist in the plugin's folder.");
+            throw new CommandException(
+                    "A file named '" + args[1] + "' doesn't exist in the plugin's folder.");
         } catch (IOException e) {
             throw new CommandException("I/O exception while reading the file. Is it in use?");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new CommandException("Unhandled exception while reading the file! Please look the console.");
+            throw new CommandException(
+                    "Unhandled exception while reading the file! Please look the console.");
         }
     }
 
     @Override
     public List<String> getTutorial() {
-        return Arrays.asList("Reads the lines from a text file. Tutorial:",
+        return Arrays.asList(
+                "Reads the lines from a text file. Tutorial:",
                 "1) Create a new text file in the plugin's folder",
                 "2) Do not use spaces in the name",
                 "3) Each line will be a line in the hologram",

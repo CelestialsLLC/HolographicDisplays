@@ -40,7 +40,8 @@ public class HologramDatabase {
         config = YamlConfiguration.loadConfiguration(file);
     }
 
-    public static NamedHologram loadHologram(String name) throws HologramNotFoundException, InvalidFormatException, WorldNotFoundException {
+    public static NamedHologram loadHologram(String name)
+            throws HologramNotFoundException, InvalidFormatException, WorldNotFoundException {
 
         ConfigurationSection configSection = config.getConfigurationSection(name);
 
@@ -67,7 +68,9 @@ public class HologramDatabase {
 
     public static CraftHologramLine readLineFromString(String rawText, CraftHologram hologram) {
         if (rawText.toLowerCase().startsWith("icon:")) {
-            String iconMaterial = ItemUtils.stripSpacingChars(rawText.substring("icon:".length(), rawText.length()));
+            String iconMaterial =
+                    ItemUtils.stripSpacingChars(
+                            rawText.substring("icon:".length(), rawText.length()));
 
             short dataValue = 0;
 
@@ -91,22 +94,24 @@ public class HologramDatabase {
             if (rawText.trim().equalsIgnoreCase("{empty}")) {
                 return new CraftTextLine(hologram, "");
             } else {
-                return new CraftTextLine(hologram, StringConverter.toReadableFormat(rawText));
+                return new CraftTextLine(hologram, StringConverter.toReadableFormat(rawText), true);
             }
         }
     }
 
     public static String saveLineToString(CraftHologramLine line) {
         if (line instanceof CraftTextLine) {
-            return StringConverter.toSaveableFormat(((CraftTextLine) line).getText());
+            return StringConverter.toSaveableFormat(
+                    ((CraftTextLine) line).getText() + line.getTouchHandlerString());
 
         } else if (line instanceof CraftItemLine) {
             CraftItemLine itemLine = (CraftItemLine) line;
-            return "ICON: " + itemLine.getItemStack().getType().toString().replace("_", " ").toLowerCase() + (itemLine.getItemStack().getDurability() != 0 ? ":" + itemLine.getItemStack().getDurability() : "");
-        } else {
-
-            return "Unknown";
-        }
+            return "ICON: "
+                    + itemLine.getItemStack().getType().toString().replace("_", " ").toLowerCase()
+                    + (itemLine.getItemStack().getDurability() != 0
+                    ? ":" + itemLine.getItemStack().getDurability()
+                    : "");
+        } else return "Unknown";
     }
 
     public static void deleteHologram(String name) {
@@ -115,15 +120,15 @@ public class HologramDatabase {
 
     public static void saveHologram(NamedHologram hologram) {
 
-        ConfigurationSection configSection = config.isConfigurationSection(hologram.getName()) ? config.getConfigurationSection(hologram.getName()) : config.createSection(hologram.getName());
+        ConfigurationSection configSection =
+                config.isConfigurationSection(hologram.getName())
+                        ? config.getConfigurationSection(hologram.getName())
+                        : config.createSection(hologram.getName());
 
         configSection.set("location", LocationSerializer.locationToString(hologram.getLocation()));
         List<String> lines = Utils.newList();
 
-        for (CraftHologramLine line : hologram.getLinesUnsafe()) {
-
-            lines.add(saveLineToString(line));
-        }
+        for (CraftHologramLine line : hologram.getLinesUnsafe()) lines.add(saveLineToString(line));
 
         configSection.set("lines", lines);
     }
@@ -147,7 +152,9 @@ public class HologramDatabase {
             saveToDisk();
         } catch (IOException ex) {
             ex.printStackTrace();
-            HolographicDisplays.getInstance().getLogger().severe("Unable to save database.yml to disk!");
+            HolographicDisplays.getInstance()
+                    .getLogger()
+                    .severe("Unable to save database.yml to disk!");
         }
     }
 }

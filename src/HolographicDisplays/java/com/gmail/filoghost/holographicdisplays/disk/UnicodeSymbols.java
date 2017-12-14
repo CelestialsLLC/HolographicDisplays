@@ -46,28 +46,41 @@ public class UnicodeSymbols {
             }
 
             if (!line.contains(":")) {
-                plugin.getLogger().warning("Unable to parse a line(" + line + ") from symbols.yml: it must contain ':' to separate the placeholder and the replacement.");
+                plugin.getLogger()
+                        .warning(
+                                "Unable to parse a line("
+                                        + line
+                                        + ") from symbols.yml: it must contain ':' to separate the placeholder and the replacement.");
                 continue;
             }
 
             int indexOf = line.indexOf(':');
             String placeholder = unquote(line.substring(0, indexOf).trim());
-            String replacement = StringEscapeUtils.unescapeJava(unquote(line.substring(indexOf + 1, line.length()).trim()));
+            String replacement =
+                    StringEscapeUtils.unescapeJava(
+                            unquote(line.substring(indexOf + 1, line.length()).trim()));
 
             if (placeholder.isEmpty() || replacement.isEmpty()) {
-                plugin.getLogger().warning("Unable to parse a line(" + line + ") from symbols.yml: the placeholder and the replacement must have both at least 1 character.");
+                plugin.getLogger()
+                        .warning(
+                                "Unable to parse a line("
+                                        + line
+                                        + ") from symbols.yml: the placeholder and the replacement must have both at least 1 character.");
                 continue;
             }
 
             if (placeholder.length() > 30) {
-                plugin.getLogger().warning("Unable to parse a line(" + line + ") from symbols.yml: the placeholder cannot be longer than 30 characters.");
+                plugin.getLogger()
+                        .warning(
+                                "Unable to parse a line("
+                                        + line
+                                        + ") from symbols.yml: the placeholder cannot be longer than 30 characters.");
                 continue;
             }
 
             placeholders.put(placeholder, replacement);
         }
     }
-
 
     protected static String placeholdersToSymbols(String input) {
         for (Entry<String, String> entry : placeholders.entrySet()) {
@@ -76,14 +89,12 @@ public class UnicodeSymbols {
         return input;
     }
 
-
     protected static String symbolsToPlaceholders(String input) {
         for (Entry<String, String> entry : placeholders.entrySet()) {
             input = input.replace(entry.getValue(), entry.getKey());
         }
         return input;
     }
-
 
     private static String unquote(String input) {
         if (input.length() < 2) {

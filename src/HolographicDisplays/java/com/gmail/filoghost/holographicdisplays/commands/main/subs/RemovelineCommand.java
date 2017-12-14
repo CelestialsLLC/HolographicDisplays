@@ -32,7 +32,6 @@ public class RemovelineCommand extends HologramSubCommand {
         return 2;
     }
 
-
     @Override
     public void execute(CommandSender sender, String label, String[] args) throws CommandException {
         NamedHologram hologram = NamedHologramManager.getHologram(args[0].toLowerCase());
@@ -40,10 +39,16 @@ public class RemovelineCommand extends HologramSubCommand {
 
         int lineNumber = CommandValidator.getInteger(args[1]);
 
-        CommandValidator.isTrue(lineNumber >= 1 && lineNumber <= hologram.size(), "The line number must be between 1 and " + hologram.size() + ".");
+        CommandValidator.isTrue(
+                lineNumber >= 1 && lineNumber <= hologram.size(),
+                "The line number must be between 1 and " + hologram.size() + ".");
         int index = lineNumber - 1;
 
-        CommandValidator.isTrue(hologram.size() > 1, "The hologram should have at least 1 line. If you want to delete it, use /" + label + " delete.");
+        CommandValidator.isTrue(
+                hologram.size() > 1,
+                "The hologram should have at least 1 line. If you want to delete it, use /"
+                        + label
+                        + " delete.");
 
         hologram.removeLine(index);
         hologram.refreshAll();
@@ -63,5 +68,4 @@ public class RemovelineCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.EDIT_LINES;
     }
-
 }

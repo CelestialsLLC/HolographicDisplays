@@ -26,5 +26,4 @@ public class NamedHologram extends CraftHologram {
     public String toString() {
         return "NamedHologram [name=" + name + ", super=" + super.toString() + "]";
     }
-
 }

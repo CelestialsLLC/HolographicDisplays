@@ -13,5 +13,4 @@ public interface PickupHandler {
      * @param player the player who picked up the item
      */
     void onPickup(Player player);
-
 }

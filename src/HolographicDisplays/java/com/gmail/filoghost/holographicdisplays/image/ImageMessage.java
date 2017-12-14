@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Huge thanks to bobacadodl for this awesome library!
- * Bukkit thread: https://forums.bukkit.org/threads/lib-imagemessage-v2-1-send-images-to-players-via-the-chat.204902
+ * Huge thanks to bobacadodl for this awesome library! Bukkit thread:
+ * https://forums.bukkit.org/threads/lib-imagemessage-v2-1-send-images-to-players-via-the-chat.204902
  */
 public class ImageMessage {
 
@@ -21,7 +21,6 @@ public class ImageMessage {
     private static final Map<ChatColor, Color> colorsMap = Utils.newMap();
 
     private static final Map<ChatColor, Color> graysMap = Utils.newMap();
-
 
     static {
         colorsMap.put(ChatColor.DARK_BLUE, new Color(0, 0, 170));
@@ -42,7 +41,6 @@ public class ImageMessage {
         graysMap.put(ChatColor.GRAY, new Color(170, 170, 170));
         graysMap.put(ChatColor.WHITE, new Color(255, 255, 255));
     }
-
 
     private String[] lines;
 
@@ -99,7 +97,6 @@ public class ImageMessage {
                         // Change the previous chat color and append the newer
                         line.append(transparencyColor);
                         previous = transparencyColor;
-
                     }
                     line.append(transparencySymbol);
 
@@ -127,7 +124,9 @@ public class ImageMessage {
     private BufferedImage toBufferedImage(Image img) {
 
         // Creates a buffered image with transparency.
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage bimage =
+                new BufferedImage(
+                        img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
         // Draws the image on to the buffered image.
         Graphics2D graphics = bimage.createGraphics();
@@ -150,10 +149,9 @@ public class ImageMessage {
     }
 
     private boolean areIdentical(Color c1, Color c2) {
-        return Math.abs(c1.getRed() - c2.getRed()) <= 5 &&
-                Math.abs(c1.getGreen() - c2.getGreen()) <= 5 &&
-                Math.abs(c1.getBlue() - c2.getBlue()) <= 5;
-
+        return Math.abs(c1.getRed() - c2.getRed()) <= 5
+                && Math.abs(c1.getGreen() - c2.getGreen()) <= 5
+                && Math.abs(c1.getBlue() - c2.getBlue()) <= 5;
     }
 
     private ChatColor getClosestChatColor(Color color) {
@@ -196,7 +194,6 @@ public class ImageMessage {
         // Minecraft has 15 colors
         return bestColorMatch;
     }
-
 
     public String[] getLines() {
         return lines;

@@ -6,8 +6,7 @@ import com.gmail.filoghost.holographicdisplays.api.handler.TouchHandler;
 import org.bukkit.entity.Player;
 
 @SuppressWarnings("deprecation")
-public class OldItemTouchHandlerWrapper
-        implements TouchHandler {
+public class OldItemTouchHandlerWrapper implements TouchHandler {
     public ItemTouchHandler oldHandler;
     private FloatingItem item;
 

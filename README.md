@@ -1,4 +1,9 @@
-# HolographicDisplays
+# HolographicDisplays [2.3.3-SNAPSHOT]
+
+### 🔧 Spigot Version
+Now supported only 1.8.8 (<a href="https://getbukkit.org/get/hNiHm0tuqAg1Xg7w7zudk63uHr0xo48D">this</a>)
+
+Later, there will be support for other versions
 
 ### 🔧 FORK FROM REDSTONEORE
 Old-old github: <a href="https://github.com/redstone/HolographicDisplays">here</a>
@@ -15,12 +20,12 @@ This is a maintained version of HolographicDisplays with several bug fixes.
 <p> Try the <a href="https://github.com/redstone/HolographicDisplays/wiki">wiki</a>.</p>
 
 ### 🐞 Found a bug? 
-<p>Please <a href="https://github.com/redstone/HolographicDisplays/issues/new">open a GitHub Issue</a>.</p>
+<p>Please <a href="https://github.com/CelestialsLLC/HolographicDisplays/issues/new">open a GitHub Issue</a>.</p>
 
 ### 🆘 Need help? 
 <p><a target="_blank" href="https://discord.gg/p3VjnUd">Jump on our discord channel</a> - we'll do our best to help 😄 </p>
 
-### ⭐️ Like HolographicDisplays by RedstoneOre?
+### ⭐️ Like HolographicDisplays by CelestialsLLC?
 <p>Tell a friend!</p>
 
 ## Why a fork?
@@ -37,17 +42,15 @@ You can also try <a target="_blank" href="https://discord.gg/p3VjnUd">our discor
 
 ## How do I compile this?
 
-Since HolographicDiplays needs to use nms you must first put all the craftbukkit jars into `libs/spigot`. See the [README.md](https://github.com/redstone/HolographicDisplays/blob/master/libs/README.md) file for more information.
-
-Then simple use gradle:
+Use your IntelliJ IDEA to compile this
 
 ```bash
-gradle build
+SHIFT + F9
 ```
 
-The jar will be compiled and available in `build/libs`. 
+The jar will be compiled and available in `out/`. 
 
-Easy right? Enjoy.
+Easy, right? Enjoy.
 
 ## Old links
 

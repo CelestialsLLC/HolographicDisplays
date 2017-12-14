@@ -29,7 +29,11 @@ public class Placeholder {
     private Map<Hologram, String> infoReplacerCache = new HashMap<>();
     private Map<Hologram, Long> infoReplacerNextUpdate = new HashMap<>();
 
-    public Placeholder(Plugin owner, String textPlaceholder, double refreshRate, PlaceholderReplacer replacer) {
+    public Placeholder(
+            Plugin owner,
+            String textPlaceholder,
+            double refreshRate,
+            PlaceholderReplacer replacer) {
         this.owner = owner;
         this.textPlaceholder = textPlaceholder;
         this.tenthsToRefresh = refreshRate <= 0.1 ? 1 : (int) (refreshRate * 10.0);
@@ -37,8 +41,11 @@ public class Placeholder {
         this.currentReplacement = "";
     }
 
-
-    public Placeholder(Plugin owner, String textPlaceholder, double refreshRate, PlaceholderReplacerInfo replacer) {
+    public Placeholder(
+            Plugin owner,
+            String textPlaceholder,
+            double refreshRate,
+            PlaceholderReplacerInfo replacer) {
         this.owner = owner;
         this.textPlaceholder = textPlaceholder;
         this.tenthsToRefresh = refreshRate <= 0.1 ? 1 : (int) (refreshRate * 10.0);
@@ -101,9 +108,11 @@ public class Placeholder {
             return null;
         }
 
-        if (!this.infoReplacerNextUpdate.containsKey(hologram) || this.infoReplacerNextUpdate.get(hologram) > System.currentTimeMillis()) {
+        if (!this.infoReplacerNextUpdate.containsKey(hologram)
+                || this.infoReplacerNextUpdate.get(hologram) > System.currentTimeMillis()) {
             this.infoReplacerCache.put(hologram, this.infoReplacer.replace(hologram));
-            this.infoReplacerNextUpdate.put(hologram, System.currentTimeMillis() + 30000); // Update in 30seconds
+            this.infoReplacerNextUpdate.put(
+                    hologram, System.currentTimeMillis() + 30000); // Update in 30seconds
         }
 
         return this.infoReplacerCache.get(hologram);
@@ -122,11 +131,8 @@ public class Placeholder {
         return false;
     }
 
-
     @Override
     public int hashCode() {
         return textPlaceholder.hashCode();
     }
-
-
 }

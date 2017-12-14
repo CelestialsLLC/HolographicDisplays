@@ -42,8 +42,10 @@ public class NmsManagerImpl implements NMSManager {
         if (VersionUtils.isMCPCOrCauldron()) {
             // MCPC+ / Cauldron entity registration.
             Class<?> entityTypesClass = Class.forName("net.minecraft.server.v1_8_R3.EntityTypes");
-            ReflectionUtils.putInPrivateStaticMap(entityTypesClass, "field_75626_c", entityClass, name);
-            ReflectionUtils.putInPrivateStaticMap(entityTypesClass, "field_75624_e", entityClass, id);
+            ReflectionUtils.putInPrivateStaticMap(
+                    entityTypesClass, "field_75626_c", entityClass, name);
+            ReflectionUtils.putInPrivateStaticMap(
+                    entityTypesClass, "field_75624_e", entityClass, id);
         } else {
             // Normal entity registration.
             ReflectionUtils.putInPrivateStaticMap(EntityTypes.class, "d", entityClass, name);
@@ -52,17 +54,29 @@ public class NmsManagerImpl implements NMSManager {
     }
 
     @Override
-    public NMSHorse spawnNMSHorse(org.bukkit.World world, double x, double y, double z, CraftHologramLine parentPiece) {
+    public NMSHorse spawnNMSHorse(
+            org.bukkit.World world, double x, double y, double z, CraftHologramLine parentPiece) {
         throw new NotImplementedException("Method can only be used on 1.7 or lower");
     }
 
     @Override
-    public NMSWitherSkull spawnNMSWitherSkull(org.bukkit.World bukkitWorld, double x, double y, double z, CraftHologramLine parentPiece) {
+    public NMSWitherSkull spawnNMSWitherSkull(
+            org.bukkit.World bukkitWorld,
+            double x,
+            double y,
+            double z,
+            CraftHologramLine parentPiece) {
         throw new NotImplementedException("Method can only be used on 1.7 or lower");
     }
 
     @Override
-    public NMSItem spawnNMSItem(org.bukkit.World bukkitWorld, double x, double y, double z, CraftItemLine parentPiece, ItemStack stack) {
+    public NMSItem spawnNMSItem(
+            org.bukkit.World bukkitWorld,
+            double x,
+            double y,
+            double z,
+            CraftItemLine parentPiece,
+            ItemStack stack) {
         WorldServer nmsWorld = ((CraftWorld) bukkitWorld).getHandle();
         EntityNMSItem customItem = new EntityNMSItem(nmsWorld, parentPiece);
         customItem.setLocationNMS(x, y, z);
@@ -74,7 +88,12 @@ public class NmsManagerImpl implements NMSManager {
     }
 
     @Override
-    public EntityNMSSlime spawnNMSSlime(org.bukkit.World bukkitWorld, double x, double y, double z, CraftTouchSlimeLine parentPiece) {
+    public EntityNMSSlime spawnNMSSlime(
+            org.bukkit.World bukkitWorld,
+            double x,
+            double y,
+            double z,
+            CraftTouchSlimeLine parentPiece) {
         WorldServer nmsWorld = ((CraftWorld) bukkitWorld).getHandle();
         EntityNMSSlime touchSlime = new EntityNMSSlime(nmsWorld, parentPiece);
         touchSlime.setLocationNMS(x, y, z);
@@ -85,7 +104,8 @@ public class NmsManagerImpl implements NMSManager {
     }
 
     @Override
-    public NMSArmorStand spawnNMSArmorStand(org.bukkit.World world, double x, double y, double z, CraftHologramLine parentPiece) {
+    public NMSArmorStand spawnNMSArmorStand(
+            org.bukkit.World world, double x, double y, double z, CraftHologramLine parentPiece) {
         WorldServer nmsWorld = ((CraftWorld) world).getHandle();
         EntityNMSArmorStand invisibleArmorStand = new EntityNMSArmorStand(nmsWorld, parentPiece);
         invisibleArmorStand.setLocationNMS(x, y, z);
@@ -148,5 +168,4 @@ public class NmsManagerImpl implements NMSManager {
     public boolean isUnloadUnsure(Chunk bukkitChunk) {
         return bukkitChunk.getWorld().isChunkInUse(bukkitChunk.getX(), bukkitChunk.getZ());
     }
-
 }

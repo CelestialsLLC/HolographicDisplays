@@ -21,7 +21,6 @@ public class Utils extends Object {
         return result;
     }
 
-
     /**
      * Convenience method to add colors to a string.
      *
@@ -35,7 +34,6 @@ public class Utils extends Object {
 
         return ChatColor.translateAlternateColorCodes('&', text);
     }
-
 
     public static boolean containsIgnoreCase(String toCheck, String content) {
         return toCheck.toLowerCase().contains(content.toLowerCase());
@@ -63,7 +61,6 @@ public class Utils extends Object {
         return new ArrayList<>();
     }
 
-
     public static <T> Set<T> newSet() {
         return new HashSet<>();
     }
@@ -78,14 +75,13 @@ public class Utils extends Object {
         return floor == num ? floor : floor - (int) (Double.doubleToRawLongBits(num) >>> 63);
     }
 
-
     public static double square(double num) {
         return num * num;
     }
 
-
     public static String join(String[] elements, String separator, int startIndex, int endIndex) {
-        Validator.isTrue(startIndex >= 0 && startIndex < elements.length, "startIndex out of bounds");
+        Validator.isTrue(
+                startIndex >= 0 && startIndex < elements.length, "startIndex out of bounds");
         Validator.isTrue(endIndex >= 0 && endIndex <= elements.length, "endIndex out of bounds");
         Validator.isTrue(startIndex <= endIndex, "startIndex lower than endIndex");
 

@@ -7,7 +7,8 @@ import java.net.Socket;
 
 public class ServerPinger {
 
-    public static PingResponse fetchData(final ServerAddress serverAddress, int timeout) throws Exception {
+    public static PingResponse fetchData(final ServerAddress serverAddress, int timeout)
+            throws Exception {
 
         Socket socket = null;
         DataOutputStream dataOut = null;
@@ -43,5 +44,4 @@ public class ServerPinger {
             PacketUtils.closeQuietly(socket);
         }
     }
-
 }

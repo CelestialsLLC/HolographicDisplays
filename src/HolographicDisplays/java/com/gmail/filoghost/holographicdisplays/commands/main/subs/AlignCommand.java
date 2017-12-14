@@ -39,7 +39,8 @@ public class AlignCommand extends HologramSubCommand {
         CommandValidator.notNull(hologram, Strings.noSuchHologram(args[1].toLowerCase()));
         CommandValidator.notNull(referenceHologram, Strings.noSuchHologram(args[2].toLowerCase()));
 
-        CommandValidator.isTrue(hologram != referenceHologram, "The hologram must not be the same!");
+        CommandValidator.isTrue(
+                hologram != referenceHologram, "The hologram must not be the same!");
 
         Location loc = hologram.getLocation();
 
@@ -53,7 +54,8 @@ public class AlignCommand extends HologramSubCommand {
             loc.setX(referenceHologram.getX());
             loc.setZ(referenceHologram.getZ());
         } else {
-            throw new CommandException("You must specify either X, Y, Z or XZ, " + args[0] + " is not a valid axis.");
+            throw new CommandException(
+                    "You must specify either X, Y, Z or XZ, " + args[0] + " is not a valid axis.");
         }
 
         hologram.teleport(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
@@ -62,17 +64,25 @@ public class AlignCommand extends HologramSubCommand {
 
         HologramDatabase.saveHologram(hologram);
         HologramDatabase.trySaveToDisk();
-        sender.sendMessage(Colors.PRIMARY + "Hologram \"" + hologram.getName() + "\" aligned to the hologram \"" + referenceHologram.getName() + "\" on the " + args[0].toUpperCase() + " axis.");
+        sender.sendMessage(
+                Colors.PRIMARY
+                        + "Hologram \""
+                        + hologram.getName()
+                        + "\" aligned to the hologram \""
+                        + referenceHologram.getName()
+                        + "\" on the "
+                        + args[0].toUpperCase()
+                        + " axis.");
     }
 
     @Override
     public List<String> getTutorial() {
-        return Collections.singletonList("Aligns the first hologram to the second, in the specified axis.");
+        return Collections.singletonList(
+                "Aligns the first hologram to the second, in the specified axis.");
     }
 
     @Override
     public SubCommandType getType() {
         return SubCommandType.GENERIC;
     }
-
 }

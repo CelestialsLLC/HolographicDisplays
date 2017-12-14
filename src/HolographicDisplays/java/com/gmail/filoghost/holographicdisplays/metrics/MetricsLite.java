@@ -50,56 +50,40 @@ public class MetricsLite {
     /**
      * The current revision number
      */
-    private final static int REVISION = 7;
+    private static final int REVISION = 7;
 
     /**
      * The base url of the metrics domain
      */
     private static final String BASE_URL = "http://report.mcstats.org";
 
-    /**
-     * The url used to report a server's status
-     */
+    /** The url used to report a server's status */
     private static final String REPORT_URL = "/plugin/%s";
 
     /**
      * Interval of time to ping (in minutes)
      */
-    private final static int PING_INTERVAL = 15;
+    private static final int PING_INTERVAL = 15;
 
-    /**
-     * The plugin this metrics submits for
-     */
+    /** The plugin this metrics submits for */
     private final Plugin plugin;
 
-    /**
-     * The plugin configuration file
-     */
+    /** The plugin configuration file */
     private final YamlConfiguration configuration;
 
-    /**
-     * The plugin configuration file
-     */
+    /** The plugin configuration file */
     private final File configurationFile;
 
-    /**
-     * Unique server id
-     */
+    /** Unique server id */
     private final String guid;
 
-    /**
-     * Debug mode
-     */
+    /** Debug mode */
     private final boolean debug;
 
-    /**
-     * Lock for synchronization
-     */
+    /** Lock for synchronization */
     private final Object optOutLock = new Object();
 
-    /**
-     * Id of the scheduled task
-     */
+    /** Id of the scheduled task */
     private volatile BukkitTask task = null;
 
     public MetricsLite(Plugin plugin) throws IOException {
@@ -145,10 +129,11 @@ public class MetricsLite {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (gzos != null) try {
-                gzos.close();
-            } catch (IOException ignore) {
-            }
+            if (gzos != null)
+                try {
+                    gzos.close();
+                } catch (IOException ignore) {
+                }
         }
 
         return baos.toByteArray();
@@ -245,9 +230,9 @@ public class MetricsLite {
     }
 
     /**
-     * Start measuring statistics. This will immediately create an async repeating task as the plugin and send
-     * the initial data to the metrics backend, and then after that it will post in increments of
-     * PING_INTERVAL * 1200 ticks.
+     * Start measuring statistics. This will immediately create an async repeating task as the
+     * plugin and send the initial data to the metrics backend, and then after that it will post in
+     * increments of PING_INTERVAL * 1200 ticks.
      *
      * @return True if statistics measuring is running, otherwise false.
      */
@@ -264,36 +249,51 @@ public class MetricsLite {
             }
 
             // Begin hitting the server with glorious data
-            task = plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
+            task =
+                    plugin.getServer()
+                            .getScheduler()
+                            .runTaskTimerAsynchronously(
+                                    plugin,
+                                    new Runnable() {
 
-                private boolean firstPost = true;
+                                        private boolean firstPost = true;
 
-                public void run() {
-                    try {
-                        // This has to be synchronized or it can collide with the disable method.
-                        synchronized (optOutLock) {
-                            // Disable Task, if it is running and the server owner decided to opt-out
-                            if (isOptOut() && task != null) {
-                                task.cancel();
-                                task = null;
-                            }
-                        }
+                                        public void run() {
+                                            try {
+                                                // This has to be synchronized or it can collide
+                                                // with the disable method.
+                                                synchronized (optOutLock) {
+                                                    // Disable Task, if it is running and the server
+                                                    // owner decided to opt-out
+                                                    if (isOptOut() && task != null) {
+                                                        task.cancel();
+                                                        task = null;
+                                                    }
+                                                }
 
-                        // We use the inverse of firstPost because if it is the first time we are posting,
-                        // it is not a interval ping, so it evaluates to FALSE
-                        // Each time thereafter it will evaluate to TRUE, i.e PING!
-                        postPlugin(!firstPost);
+                                                // We use the inverse of firstPost because if it is
+                                                // the first time we are posting,
+                                                // it is not a interval ping, so it evaluates to
+                                                // FALSE
+                                                // Each time thereafter it will evaluate to TRUE,
+                                                // i.e PING!
+                                                postPlugin(!firstPost);
 
-                        // After the first post we set firstPost to false
-                        // Each post thereafter will be a ping
-                        firstPost = false;
-                    } catch (IOException e) {
-                        if (debug) {
-                            Bukkit.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
-                        }
-                    }
-                }
-            }, 0, PING_INTERVAL * 1200);
+                                                // After the first post we set firstPost to false
+                                                // Each post thereafter will be a ping
+                                                firstPost = false;
+                                            } catch (IOException e) {
+                                                if (debug) {
+                                                    Bukkit.getLogger()
+                                                            .log(
+                                                                    Level.INFO,
+                                                                    "[Metrics] " + e.getMessage());
+                                                }
+                                            }
+                                        }
+                                    },
+                                    0,
+                                    PING_INTERVAL * 1200);
 
             return true;
         }
@@ -320,7 +320,8 @@ public class MetricsLite {
     }
 
     /**
-     * Enables metrics for the server by setting "opt-out" to false in the config file and starting the metrics task.
+     * Enables metrics for the server by setting "opt-out" to false in the config file and starting
+     * the metrics task.
      *
      * @throws java.io.IOException
      */
@@ -341,7 +342,8 @@ public class MetricsLite {
     }
 
     /**
-     * Disables metrics for the server by setting "opt-out" to true in the config file and canceling the metrics task.
+     * Disables metrics for the server by setting "opt-out" to true in the config file and canceling
+     * the metrics task.
      *
      * @throws java.io.IOException
      */
@@ -363,12 +365,14 @@ public class MetricsLite {
     }
 
     /**
-     * Gets the File object of the config file that should be used to store data such as the GUID and opt-out status
+     * Gets the File object of the config file that should be used to store data such as the GUID
+     * and opt-out status
      *
      * @return the File object for the config file
      */
     public File getConfigFile() {
-        // I believe the easiest way to get the base folder (e.g craftbukkit set via -P) for plugins to use
+        // I believe the easiest way to get the base folder (e.g craftbukkit set via -P) for plugins
+        // to use
         // is to abuse the plugin object we already have
         // plugin.getDataFolder() => base/plugins/PluginA/
         // pluginsFolder => base/plugins/
@@ -379,9 +383,7 @@ public class MetricsLite {
         return new File(new File(pluginsFolder, "PluginMetrics"), "config.yml");
     }
 
-    /**
-     * Generic method that posts a plugin to the metrics website
-     */
+    /** Generic method that posts a plugin to the metrics website */
     private void postPlugin(boolean isPing) throws IOException {
         // Server software specific section
         PluginDescriptionFile description = plugin.getDescription();
@@ -391,13 +393,15 @@ public class MetricsLite {
         String serverVersion = Bukkit.getVersion();
         int playersOnline = VersionUtils.getOnlinePlayers().size();
 
-        // END server software specific section -- all code below does not use any code outside of this class / Java
+        // END server software specific section -- all code below does not use any code outside of
+        // this class / Java
 
         // Construct the post data
         StringBuilder json = new StringBuilder(1024);
         json.append('{');
 
-        // The plugin's description file containg all of the plugin data such as name, version, author, etc
+        // The plugin's description file containg all of the plugin data such as name, version,
+        // author, etc
         appendJSONPair(json, "guid", guid);
         appendJSONPair(json, "plugin_version", pluginVersion);
         appendJSONPair(json, "server_version", serverVersion);
@@ -444,7 +448,6 @@ public class MetricsLite {
             connection = url.openConnection();
         }
 
-
         byte[] uncompressed = json.toString().getBytes();
         byte[] compressed = gzip(json.toString());
 
@@ -459,7 +462,13 @@ public class MetricsLite {
         connection.setDoOutput(true);
 
         if (debug) {
-            System.out.println("[Metrics] Prepared request for " + pluginName + " uncompressed=" + uncompressed.length + " compressed=" + compressed.length);
+            System.out.println(
+                    "[Metrics] Prepared request for "
+                            + pluginName
+                            + " uncompressed="
+                            + uncompressed.length
+                            + " compressed="
+                            + compressed.length);
         }
 
         // Write the data
@@ -468,7 +477,8 @@ public class MetricsLite {
         os.flush();
 
         // Now read the response
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        final BufferedReader reader =
+                new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String response = reader.readLine();
 
         // close resources
@@ -499,5 +509,4 @@ public class MetricsLite {
             return false;
         }
     }
-
 }

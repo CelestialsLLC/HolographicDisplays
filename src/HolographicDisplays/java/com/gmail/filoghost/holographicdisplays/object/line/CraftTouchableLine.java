@@ -5,21 +5,20 @@ import com.gmail.filoghost.holographicdisplays.object.CraftHologram;
 import org.bukkit.World;
 
 /**
- * Useful class that implements TouchablePiece. The downside is that subclasses must extend this, and cannot extend other classes.
- * But all the current items are touchable.
+ * Useful class that implements TouchablePiece. The downside is that subclasses must extend this,
+ * and cannot extend other classes. But all the current items are touchable.
  */
 public abstract class CraftTouchableLine extends CraftHologramLine {
 
     protected CraftTouchSlimeLine touchSlime;
     private TouchHandler touchHandler;
 
-
     protected CraftTouchableLine(double height, CraftHologram parent) {
         super(height, parent);
     }
 
-
-    protected void setTouchHandler(TouchHandler touchHandler, World world, double x, double y, double z) {
+    protected void setTouchHandler(
+            TouchHandler touchHandler, World world, double x, double y, double z) {
         this.touchHandler = touchHandler;
 
         if (touchHandler != null && touchSlime == null && world != null) {
@@ -28,17 +27,16 @@ public abstract class CraftTouchableLine extends CraftHologramLine {
             touchSlime.spawn(world, x, y + (getHeight() / 2.0 - touchSlime.getHeight() / 2.0), z);
 
         } else if (touchHandler == null && touchSlime != null) {
-            // Opposite case, the touch handler was not null and an entity was spawned, but now it's useless.
+            // Opposite case, the touch handler was not null and an entity was spawned, but now it's
+            // useless.
             touchSlime.despawn();
             touchSlime = null;
         }
     }
 
-
     public TouchHandler getTouchHandler() {
         return this.touchHandler;
     }
-
 
     @Override
     public void spawn(World world, double x, double y, double z) {
@@ -50,7 +48,6 @@ public abstract class CraftTouchableLine extends CraftHologramLine {
         }
     }
 
-
     @Override
     public void despawn() {
         super.despawn();
@@ -61,7 +58,6 @@ public abstract class CraftTouchableLine extends CraftHologramLine {
         }
     }
 
-
     @Override
     public void teleport(double x, double y, double z) {
         if (touchSlime != null) {
@@ -69,9 +65,7 @@ public abstract class CraftTouchableLine extends CraftHologramLine {
         }
     }
 
-
     public CraftTouchSlimeLine getTouchSlime() {
         return touchSlime;
     }
-
 }

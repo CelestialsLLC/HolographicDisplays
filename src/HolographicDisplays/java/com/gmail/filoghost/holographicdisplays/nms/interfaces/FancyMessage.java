@@ -24,5 +24,4 @@ public interface FancyMessage {
     String toJSONString();
 
     void send(Player player);
-
 }

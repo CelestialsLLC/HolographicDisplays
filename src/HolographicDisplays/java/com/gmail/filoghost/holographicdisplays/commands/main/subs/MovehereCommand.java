@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MovehereCommand extends HologramSubCommand {
 
-
     public MovehereCommand() {
         super("movehere");
         setPermission(Strings.BASE_PERM + "movehere");
@@ -34,14 +33,17 @@ public class MovehereCommand extends HologramSubCommand {
         return 1;
     }
 
-
     @Override
     public void execute(CommandSender sender, String label, String[] args) throws CommandException {
         Player player = CommandValidator.getPlayerSender(sender);
         NamedHologram hologram = NamedHologramManager.getHologram(args[0].toLowerCase());
         CommandValidator.notNull(hologram, Strings.noSuchHologram(args[0].toLowerCase()));
 
-        hologram.teleport(player.getWorld(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ());
+        hologram.teleport(
+                player.getWorld(),
+                player.getLocation().getX(),
+                player.getLocation().getY(),
+                player.getLocation().getZ());
         hologram.despawnEntities();
         hologram.refreshAll();
 
@@ -50,7 +52,11 @@ public class MovehereCommand extends HologramSubCommand {
         Location to = player.getLocation();
         to.setPitch(90);
         player.teleport(to, TeleportCause.PLUGIN);
-        player.sendMessage(Colors.PRIMARY + "You moved the hologram '" + hologram.getName() + "' near to you.");
+        player.sendMessage(
+                Colors.PRIMARY
+                        + "You moved the hologram '"
+                        + hologram.getName()
+                        + "' near to you.");
     }
 
     @Override
@@ -62,5 +68,4 @@ public class MovehereCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.GENERIC;
     }
-
 }

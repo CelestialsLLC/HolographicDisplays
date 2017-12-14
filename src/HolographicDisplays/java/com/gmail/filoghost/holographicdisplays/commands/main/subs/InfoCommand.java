@@ -32,7 +32,6 @@ public class InfoCommand extends HologramSubCommand {
         return 1;
     }
 
-
     @Override
     public void execute(CommandSender sender, String label, String[] args) throws CommandException {
         String name = args[0].toLowerCase();
@@ -44,7 +43,16 @@ public class InfoCommand extends HologramSubCommand {
         int index = 0;
 
         for (CraftHologramLine line : hologram.getLinesUnsafe()) {
-            sender.sendMessage(Colors.SECONDARY + Colors.BOLD + (++index) + Colors.SECONDARY_SHADOW + ". " + Colors.SECONDARY + (line instanceof CraftTextLine ? ((CraftTextLine) line).getText() : HologramDatabase.saveLineToString(line)));
+            sender.sendMessage(
+                    Colors.SECONDARY
+                            + Colors.BOLD
+                            + (++index)
+                            + Colors.SECONDARY_SHADOW
+                            + ". "
+                            + Colors.SECONDARY
+                            + (line instanceof CraftTextLine
+                            ? ((CraftTextLine) line).getText()
+                            : HologramDatabase.saveLineToString(line)));
         }
     }
 
@@ -57,5 +65,4 @@ public class InfoCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.EDIT_LINES;
     }
-
 }

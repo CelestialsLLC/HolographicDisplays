@@ -15,5 +15,4 @@ public interface TextLine extends TouchableLine {
      * @param text the new text of this line.
      */
     void setText(String text);
-
 }

@@ -14,12 +14,16 @@ class PacketUtils {
         final int len = s.length();
         final byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
-            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i + 1), 16));
+            data[i / 2] =
+                    (byte)
+                            ((Character.digit(s.charAt(i), 16) << 4)
+                                    + Character.digit(s.charAt(i + 1), 16));
         }
         out.write(data);
     }
 
-    public static void writeString(final DataOutputStream out, final String s, final Charset charset) throws IOException {
+    public static void writeString(
+            final DataOutputStream out, final String s, final Charset charset) throws IOException {
         if (charset == PacketUtils.UTF8) {
             writeVarInt(out, s.length());
         } else {
@@ -59,5 +63,4 @@ class PacketUtils {
         } catch (IOException e) {
         }
     }
-
 }

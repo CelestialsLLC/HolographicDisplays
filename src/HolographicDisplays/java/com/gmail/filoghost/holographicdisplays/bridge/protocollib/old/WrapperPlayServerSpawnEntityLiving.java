@@ -48,7 +48,8 @@ public class WrapperPlayServerSpawnEntityLiving extends AbstractPacket {
     // Useful constructor
     private static PacketContainer fromEntity(Entity entity) {
         if (entityConstructor == null)
-            entityConstructor = ProtocolLibrary.getProtocolManager().createPacketConstructor(TYPE, entity);
+            entityConstructor =
+                    ProtocolLibrary.getProtocolManager().createPacketConstructor(TYPE, entity);
         return entityConstructor.createPacket(entity);
     }
 
@@ -112,8 +113,8 @@ public class WrapperPlayServerSpawnEntityLiving extends AbstractPacket {
 
     /**
      * Retrieve the x position of the object.
-     * <p>
-     * Note that the coordinate is rounded off to the nearest 1/32 of a meter.
+     *
+     * <p>Note that the coordinate is rounded off to the nearest 1/32 of a meter.
      *
      * @return The current X
      */
@@ -132,8 +133,8 @@ public class WrapperPlayServerSpawnEntityLiving extends AbstractPacket {
 
     /**
      * Retrieve the y position of the object.
-     * <p>
-     * Note that the coordinate is rounded off to the nearest 1/32 of a meter.
+     *
+     * <p>Note that the coordinate is rounded off to the nearest 1/32 of a meter.
      *
      * @return The current y
      */
@@ -152,8 +153,8 @@ public class WrapperPlayServerSpawnEntityLiving extends AbstractPacket {
 
     /**
      * Retrieve the z position of the object.
-     * <p>
-     * Note that the coordinate is rounded off to the nearest 1/32 of a meter.
+     *
+     * <p>Note that the coordinate is rounded off to the nearest 1/32 of a meter.
      *
      * @return The current z
      */
@@ -280,8 +281,8 @@ public class WrapperPlayServerSpawnEntityLiving extends AbstractPacket {
 
     /**
      * Retrieve the data watcher.
-     * <p>
-     * Content varies by mob, see Entities.
+     *
+     * <p>Content varies by mob, see Entities.
      *
      * @return The current Metadata
      */

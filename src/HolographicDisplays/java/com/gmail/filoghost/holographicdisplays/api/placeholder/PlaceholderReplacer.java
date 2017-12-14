@@ -9,5 +9,4 @@ public interface PlaceholderReplacer {
      * @return the replacement
      */
     String update();
-
 }

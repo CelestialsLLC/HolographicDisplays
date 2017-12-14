@@ -81,5 +81,4 @@ public class CommandValidator {
 
         return new ItemStack(match, 1, (short) dataValue);
     }
-
 }

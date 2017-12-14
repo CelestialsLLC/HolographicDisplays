@@ -10,6 +10,8 @@ public abstract class CraftHologramLine implements HologramLine {
     private final double height;
     private final CraftHologram parent;
 
+    private String touchHandler = "|||, ";
+
     // This field is necessary for teleport.
     private boolean isSpawned;
 
@@ -42,6 +44,14 @@ public abstract class CraftHologramLine implements HologramLine {
         // Do nothing, there are no entities in this class.
     }
 
+    public void SET_TOUCH_HANDLER(String touchHandler) {
+        this.touchHandler = touchHandler;
+    }
+
+    public String getTouchHandlerString() {
+        return this.touchHandler;
+    }
+
     public void despawn() {
         isSpawned = false;
     }
@@ -53,5 +63,4 @@ public abstract class CraftHologramLine implements HologramLine {
     public abstract int[] getEntitiesIDs();
 
     public abstract void teleport(double x, double y, double z);
-
 }

@@ -21,7 +21,8 @@ public class LocationSerializer {
         decimalFormat.setDecimalFormatSymbols(formatSymbols);
     }
 
-    public static Location locationFromString(String input) throws WorldNotFoundException, InvalidFormatException {
+    public static Location locationFromString(String input)
+            throws WorldNotFoundException, InvalidFormatException {
         if (input == null) {
             throw new InvalidFormatException();
         }
@@ -50,6 +51,12 @@ public class LocationSerializer {
     }
 
     public static String locationToString(Location loc) {
-        return (loc.getWorld().getName() + ", " + decimalFormat.format(loc.getX()) + ", " + decimalFormat.format(loc.getY()) + ", " + decimalFormat.format(loc.getZ()));
+        return (loc.getWorld().getName()
+                + ", "
+                + decimalFormat.format(loc.getX())
+                + ", "
+                + decimalFormat.format(loc.getY())
+                + ", "
+                + decimalFormat.format(loc.getZ()));
     }
 }

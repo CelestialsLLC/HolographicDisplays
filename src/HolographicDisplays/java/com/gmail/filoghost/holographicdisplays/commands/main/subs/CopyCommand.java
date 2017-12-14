@@ -43,7 +43,9 @@ public class CopyCommand extends HologramSubCommand {
         intoHologram.clearLines();
         for (CraftHologramLine line : hologramToCopy.getLinesUnsafe()) {
             String lineString = HologramDatabase.saveLineToString(line);
-            intoHologram.getLinesUnsafe().add(HologramDatabase.readLineFromString(lineString, intoHologram));
+            intoHologram
+                    .getLinesUnsafe()
+                    .add(HologramDatabase.readLineFromString(lineString, intoHologram));
         }
 
         intoHologram.refreshAll();
@@ -51,18 +53,22 @@ public class CopyCommand extends HologramSubCommand {
         HologramDatabase.saveHologram(intoHologram);
         HologramDatabase.trySaveToDisk();
 
-        sender.sendMessage(Colors.PRIMARY + "Hologram \"" + hologramToCopy.getName() + "\" copied into hologram \"" + intoHologram.getName() + "\"!");
+        sender.sendMessage(
+                Colors.PRIMARY
+                        + "Hologram \""
+                        + hologramToCopy.getName()
+                        + "\" copied into hologram \""
+                        + intoHologram.getName()
+                        + "\"!");
     }
 
     @Override
     public List<String> getTutorial() {
-        return Collections.singletonList(
-                "Copies the contents of a hologram into another one.");
+        return Collections.singletonList("Copies the contents of a hologram into another one.");
     }
 
     @Override
     public SubCommandType getType() {
         return SubCommandType.GENERIC;
     }
-
 }

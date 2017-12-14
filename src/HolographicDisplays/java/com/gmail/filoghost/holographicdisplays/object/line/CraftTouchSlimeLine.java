@@ -19,7 +19,6 @@ public class CraftTouchSlimeLine extends CraftHologramLine {
     private NMSSlime nmsSlime;
     private NMSEntityBase nmsVehicle;
 
-
     protected CraftTouchSlimeLine(CraftHologram parent, CraftTouchableLine touchablePiece) {
         super(0.5, parent);
         this.touchablePiece = touchablePiece;
@@ -28,7 +27,6 @@ public class CraftTouchSlimeLine extends CraftHologramLine {
     public CraftTouchableLine getTouchablePiece() {
         return touchablePiece;
     }
-
 
     @Override
     public void spawn(World world, double x, double y, double z) {
@@ -39,9 +37,13 @@ public class CraftTouchSlimeLine extends CraftHologramLine {
         nmsSlime = HolographicDisplays.getNMSManager().spawnNMSSlime(world, x, y + offset, z, this);
 
         if (MinecraftVersion.isGreaterEqualThan(MinecraftVersion.v1_8)) {
-            nmsVehicle = HolographicDisplays.getNMSManager().spawnNMSArmorStand(world, x, y + offset, z, this);
+            nmsVehicle =
+                    HolographicDisplays.getNMSManager()
+                            .spawnNMSArmorStand(world, x, y + offset, z, this);
         } else {
-            nmsVehicle = HolographicDisplays.getNMSManager().spawnNMSWitherSkull(world, x, y + offset, z, this);
+            nmsVehicle =
+                    HolographicDisplays.getNMSManager()
+                            .spawnNMSWitherSkull(world, x, y + offset, z, this);
         }
 
         nmsSlime.setPassengerOfNMS(nmsVehicle);
@@ -49,7 +51,6 @@ public class CraftTouchSlimeLine extends CraftHologramLine {
         nmsSlime.setLockTick(true);
         nmsVehicle.setLockTick(true);
     }
-
 
     @Override
     public void despawn() {
@@ -65,7 +66,6 @@ public class CraftTouchSlimeLine extends CraftHologramLine {
             nmsVehicle = null;
         }
     }
-
 
     @Override
     public void teleport(double x, double y, double z) {
@@ -112,5 +112,4 @@ public class CraftTouchSlimeLine extends CraftHologramLine {
     public String toString() {
         return "CraftTouchSlimeLine [touchablePiece=" + touchablePiece + "]";
     }
-
 }

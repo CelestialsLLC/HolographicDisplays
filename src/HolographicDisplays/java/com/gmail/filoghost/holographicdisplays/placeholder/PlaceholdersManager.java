@@ -39,44 +39,57 @@ public class PlaceholdersManager {
         return matcher.group(2).trim();
     }
 
-
     public static void load(Plugin plugin) {
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+        Bukkit.getScheduler()
+                .scheduleSyncRepeatingTask(
+                        plugin,
+                        () -> {
+                            for (Placeholder placeholder : PlaceholdersRegister.getPlaceholders()) {
+                                if (elapsedTenthsOfSecond % placeholder.getTenthsToRefresh() == 0) {
+                                    try {
+                                        placeholder.update();
+                                    } catch (Throwable t) {
+                                        HolographicDisplays.getInstance()
+                                                .getLogger()
+                                                .log(
+                                                        Level.WARNING,
+                                                        "The placeholder "
+                                                                + placeholder.getTextPlaceholder()
+                                                                + " registered by the plugin "
+                                                                + placeholder.getOwner().getName()
+                                                                + " generated an exception while updating. Please contact the author of "
+                                                                + placeholder.getOwner().getName(),
+                                                        t);
+                                    }
+                                }
+                            }
 
-            for (Placeholder placeholder : PlaceholdersRegister.getPlaceholders()) {
-                if (elapsedTenthsOfSecond % placeholder.getTenthsToRefresh() == 0) {
-                    try {
-                        placeholder.update();
-                    } catch (Throwable t) {
-                        HolographicDisplays.getInstance().getLogger().log(Level.WARNING, "The placeholder " + placeholder.getTextPlaceholder() + " registered by the plugin " + placeholder.getOwner().getName() + " generated an exception while updating. Please contact the author of " + placeholder.getOwner().getName(), t);
-                    }
-                }
-            }
+                            for (Placeholder placeholder :
+                                    AnimationsRegister.getAnimations().values()) {
+                                if (elapsedTenthsOfSecond % placeholder.getTenthsToRefresh() == 0) {
+                                    placeholder.update();
+                                }
+                            }
 
-            for (Placeholder placeholder : AnimationsRegister.getAnimations().values()) {
-                if (elapsedTenthsOfSecond % placeholder.getTenthsToRefresh() == 0) {
-                    placeholder.update();
-                }
-            }
+                            Iterator<DynamicLineData> iter = linesToUpdate.iterator();
+                            DynamicLineData currentLineData;
 
-            Iterator<DynamicLineData> iter = linesToUpdate.iterator();
-            DynamicLineData currentLineData;
+                            while (iter.hasNext()) {
+                                currentLineData = iter.next();
 
-            while (iter.hasNext()) {
-                currentLineData = iter.next();
+                                if (currentLineData.getEntity().isDeadNMS()) {
+                                    iter.remove();
+                                } else {
+                                    updatePlaceholders(currentLineData, null);
+                                }
+                            }
 
-                if (currentLineData.getEntity().isDeadNMS()) {
-                    iter.remove();
-                } else {
-                    updatePlaceholders(currentLineData, null);
-                }
-            }
-
-            elapsedTenthsOfSecond++;
-        }, 2L, 2L);
+                            elapsedTenthsOfSecond++;
+                        },
+                        2L,
+                        2L);
     }
-
 
     public static void untrackAll() {
         linesToUpdate.clear();
@@ -139,7 +152,6 @@ public class PlaceholdersManager {
             }
         }
 
-
         // Players in a world count pattern.
         matcher = WORLD_PATTERN.matcher(name);
         while (matcher.find()) {
@@ -149,7 +161,8 @@ public class PlaceholdersManager {
             }
 
             final String worldName = extractArgumentFromPlaceholder(matcher);
-            worldsOnlinePlayersReplacers.put(matcher.group(), () -> WorldPlayerCounterTask.getCount(worldName));
+            worldsOnlinePlayersReplacers.put(
+                    matcher.group(), () -> WorldPlayerCounterTask.getCount(worldName));
         }
 
         // BungeeCord online pattern.
@@ -173,16 +186,20 @@ public class PlaceholdersManager {
                 final String[] serversToTrack = split;
 
                 // Add it to tracked servers.
-                bungeeReplacers.put(matcher.group(), () -> {
-                    int count = 0;
-                    for (String serverToTrack : serversToTrack) {
-                        count += BungeeServerTracker.getPlayersOnline(serverToTrack);
-                    }
-                    return String.valueOf(count);
-                });
+                bungeeReplacers.put(
+                        matcher.group(),
+                        () -> {
+                            int count = 0;
+                            for (String serverToTrack : serversToTrack) {
+                                count += BungeeServerTracker.getPlayersOnline(serverToTrack);
+                            }
+                            return String.valueOf(count);
+                        });
             } else {
                 // Normal, single tracked server.
-                bungeeReplacers.put(matcher.group(), () -> String.valueOf(BungeeServerTracker.getPlayersOnline(serverName)));
+                bungeeReplacers.put(
+                        matcher.group(),
+                        () -> String.valueOf(BungeeServerTracker.getPlayersOnline(serverName)));
             }
         }
 
@@ -198,7 +215,8 @@ public class PlaceholdersManager {
             BungeeServerTracker.track(serverName); // Track this server.
 
             // Add it to tracked servers.
-            bungeeReplacers.put(matcher.group(), () -> BungeeServerTracker.getMaxPlayers(serverName));
+            bungeeReplacers.put(
+                    matcher.group(), () -> BungeeServerTracker.getMaxPlayers(serverName));
         }
 
         // BungeeCord motd pattern.
@@ -243,9 +261,9 @@ public class PlaceholdersManager {
             BungeeServerTracker.track(serverName); // Track this server.
 
             // Add it to tracked servers.
-            bungeeReplacers.put(matcher.group(), () -> BungeeServerTracker.getOnlineStatus(serverName));
+            bungeeReplacers.put(
+                    matcher.group(), () -> BungeeServerTracker.getOnlineStatus(serverName));
         }
-
 
         // Animation pattern.
         matcher = ANIMATION_PATTERN.matcher(name);
@@ -269,7 +287,11 @@ public class PlaceholdersManager {
             }
         }
 
-        if (Utils.isThereNonNull(normalPlaceholders, bungeeReplacers, worldsOnlinePlayersReplacers, animationsPlaceholders)) {
+        if (Utils.isThereNonNull(
+                normalPlaceholders,
+                bungeeReplacers,
+                worldsOnlinePlayersReplacers,
+                animationsPlaceholders)) {
 
             DynamicLineData lineData = new DynamicLineData(nameableEntity, name);
 
@@ -306,7 +328,6 @@ public class PlaceholdersManager {
         }
     }
 
-
     private static void updatePlaceholders(DynamicLineData lineData, Hologram source) {
 
         String oldCustomName = lineData.getEntity().getCustomNameNMS();
@@ -315,22 +336,33 @@ public class PlaceholdersManager {
         if (!lineData.getPlaceholders().isEmpty()) {
             for (Placeholder placeholder : lineData.getPlaceholders()) {
                 if (placeholder.getInfoReplacer() != null) {
-                    newCustomName = newCustomName.replace(placeholder.getTextPlaceholder(), Utils.sanitize(placeholder.update(source)));
+                    newCustomName =
+                            newCustomName.replace(
+                                    placeholder.getTextPlaceholder(),
+                                    Utils.sanitize(placeholder.update(source)));
                 } else {
-                    newCustomName = newCustomName.replace(placeholder.getTextPlaceholder(), Utils.sanitize(placeholder.getCurrentReplacement()));
+                    newCustomName =
+                            newCustomName.replace(
+                                    placeholder.getTextPlaceholder(),
+                                    Utils.sanitize(placeholder.getCurrentReplacement()));
                 }
             }
         }
 
         if (!lineData.getReplacers().isEmpty()) {
             for (Entry<String, PlaceholderReplacer> entry : lineData.getReplacers().entrySet()) {
-                newCustomName = newCustomName.replace(entry.getKey(), Utils.sanitize(entry.getValue().update()));
+                newCustomName =
+                        newCustomName.replace(
+                                entry.getKey(), Utils.sanitize(entry.getValue().update()));
             }
         }
 
         if (!lineData.getAnimations().isEmpty()) {
             for (Entry<String, Placeholder> entry : lineData.getAnimations().entrySet()) {
-                newCustomName = newCustomName.replace(entry.getKey(), Utils.sanitize(entry.getValue().getCurrentReplacement()));
+                newCustomName =
+                        newCustomName.replace(
+                                entry.getKey(),
+                                Utils.sanitize(entry.getValue().getCurrentReplacement()));
             }
         }
 
@@ -339,5 +371,4 @@ public class PlaceholdersManager {
             lineData.getEntity().setCustomNameNMS(newCustomName);
         }
     }
-
 }

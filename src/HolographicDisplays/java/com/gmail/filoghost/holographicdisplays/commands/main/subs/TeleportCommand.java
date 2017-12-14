@@ -15,7 +15,6 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import java.util.Collections;
 import java.util.List;
 
-
 public class TeleportCommand extends HologramSubCommand {
 
     public TeleportCommand() {
@@ -42,8 +41,11 @@ public class TeleportCommand extends HologramSubCommand {
         Location loc = hologram.getLocation();
         loc.setPitch(90);
         player.teleport(loc, TeleportCause.PLUGIN);
-        player.sendMessage(Colors.PRIMARY + "You were teleported to the hologram named '" + hologram.getName() + "'.");
-
+        player.sendMessage(
+                Colors.PRIMARY
+                        + "You were teleported to the hologram named '"
+                        + hologram.getName()
+                        + "'.");
     }
 
     @Override
@@ -55,5 +57,4 @@ public class TeleportCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.GENERIC;
     }
-
 }

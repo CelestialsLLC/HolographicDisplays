@@ -14,7 +14,6 @@ public class StringConverter {
         return input;
     }
 
-
     public static String toSaveableFormat(String input) {
         if (input == null) {
             return null;
@@ -24,5 +23,4 @@ public class StringConverter {
         input = input.replace("§", "&");
         return input;
     }
-
 }

@@ -30,7 +30,6 @@ import java.util.List;
 
 public class ReadimageCommand extends HologramSubCommand {
 
-
     public ReadimageCommand() {
         super("readimage", "image");
         setPermission(Strings.BASE_PERM + "readimage");
@@ -45,7 +44,6 @@ public class ReadimageCommand extends HologramSubCommand {
     public int getMinimumArguments() {
         return 3;
     }
-
 
     @Override
     public void execute(CommandSender sender, String label, String[] args) throws CommandException {
@@ -84,10 +82,16 @@ public class ReadimageCommand extends HologramSubCommand {
             } else {
 
                 if (fileName.matches(".*[a-zA-Z0-9\\-]+\\.[a-zA-Z0-9\\-]{1,4}\\/.+")) {
-                    Strings.sendWarning(sender, "The image path seems to be an URL. If so, please use http:// or https:// in the path.");
+                    Strings.sendWarning(
+                            sender,
+                            "The image path seems to be an URL. If so, please use http:// or https:// in the path.");
                 }
 
-                image = FileUtils.readImage(new File(HolographicDisplays.getInstance().getDataFolder(), fileName));
+                image =
+                        FileUtils.readImage(
+                                new File(
+                                        HolographicDisplays.getInstance().getDataFolder(),
+                                        fileName));
             }
 
             if (!append) {
@@ -103,14 +107,17 @@ public class ReadimageCommand extends HologramSubCommand {
             hologram.refreshAll();
 
             if (newLines.length < 5) {
-                sender.sendMessage(Strings.TIP_PREFIX + "The image has a very low height. You can increase it by increasing the width, it will scale automatically.");
+                sender.sendMessage(
+                        Strings.TIP_PREFIX
+                                + "The image has a very low height. You can increase it by increasing the width, it will scale automatically.");
             }
 
             HologramDatabase.saveHologram(hologram);
             HologramDatabase.trySaveToDisk();
 
             if (append) {
-                sender.sendMessage(Colors.PRIMARY + "The image was appended int the end of the hologram!");
+                sender.sendMessage(
+                        Colors.PRIMARY + "The image was appended int the end of the hologram!");
             } else {
                 sender.sendMessage(Colors.PRIMARY + "The image was drawn in the hologram!");
             }
@@ -119,23 +126,32 @@ public class ReadimageCommand extends HologramSubCommand {
         } catch (MalformedURLException e) {
             throw new CommandException("The provided URL was not valid.");
         } catch (TooWideException e) {
-            throw new CommandException("The image is too large. Max width allowed is " + ImageMessage.MAX_WIDTH + " pixels.");
+            throw new CommandException(
+                    "The image is too large. Max width allowed is "
+                            + ImageMessage.MAX_WIDTH
+                            + " pixels.");
         } catch (UnreadableImageException e) {
-            throw new CommandException("The plugin was unable to read the image. Be sure that the format is supported.");
+            throw new CommandException(
+                    "The plugin was unable to read the image. Be sure that the format is supported.");
         } catch (FileNotFoundException e) {
-            throw new CommandException("The image \"" + args[1] + "\" doesn't exist in the plugin's folder.");
+            throw new CommandException(
+                    "The image \"" + args[1] + "\" doesn't exist in the plugin's folder.");
         } catch (IOException e) {
             e.printStackTrace();
-            throw new CommandException("I/O exception while reading the image. " + (isUrl ? "Is the URL valid?" : "Is it in use?"));
+            throw new CommandException(
+                    "I/O exception while reading the image. "
+                            + (isUrl ? "Is the URL valid?" : "Is it in use?"));
         } catch (Exception e) {
             e.printStackTrace();
-            throw new CommandException("Unhandled exception while reading the image! Please look the console.");
+            throw new CommandException(
+                    "Unhandled exception while reading the image! Please look the console.");
         }
     }
 
     @Override
     public List<String> getTutorial() {
-        return Arrays.asList("Reads an image from a file. Tutorial:",
+        return Arrays.asList(
+                "Reads an image from a file. Tutorial:",
                 "1) Move the image in the plugin's folder",
                 "2) Do not use spaces in the name",
                 "3) Do /holograms read <hologram> <image> <width>",
@@ -155,5 +171,4 @@ public class ReadimageCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.EDIT_LINES;
     }
-
 }

@@ -48,7 +48,8 @@ public class WrapperPlayServerSpawnEntityLiving extends AbstractPacket {
     // Useful constructor
     private static PacketContainer fromEntity(Entity entity) {
         if (entityConstructor == null)
-            entityConstructor = ProtocolLibrary.getProtocolManager().createPacketConstructor(TYPE, entity);
+            entityConstructor =
+                    ProtocolLibrary.getProtocolManager().createPacketConstructor(TYPE, entity);
         return entityConstructor.createPacket(entity);
     }
 
@@ -112,8 +113,8 @@ public class WrapperPlayServerSpawnEntityLiving extends AbstractPacket {
 
     /**
      * Retrieve the data watcher.
-     * <p>
-     * Content varies by mob, see Entities.
+     *
+     * <p>Content varies by mob, see Entities.
      *
      * @return The current Metadata
      */

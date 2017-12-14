@@ -45,26 +45,56 @@ public class ListCommand extends HologramSubCommand {
             totalPages++;
         }
 
-
         if (NamedHologramManager.size() == 0) {
-            throw new CommandException("There are no holograms yet. Create one with /" + label + " create.");
+            throw new CommandException(
+                    "There are no holograms yet. Create one with /" + label + " create.");
         }
 
         sender.sendMessage("");
-        sender.sendMessage(Strings.formatTitle("Holograms list " + Colors.SECONDARY + "(Page " + page + " of " + totalPages + ")"));
+        sender.sendMessage(
+                Strings.formatTitle(
+                        "Holograms list "
+                                + Colors.SECONDARY
+                                + "(Page "
+                                + page
+                                + " of "
+                                + totalPages
+                                + ")"));
         int fromIndex = (page - 1) * HOLOGRAMS_PER_PAGE;
         int toIndex = fromIndex + HOLOGRAMS_PER_PAGE;
 
         for (int i = fromIndex; i < toIndex; i++) {
             if (i < NamedHologramManager.size()) {
                 NamedHologram hologram = NamedHologramManager.get(i);
-                sender.sendMessage(Colors.SECONDARY_SHADOW + "- " + Colors.SECONDARY + Colors.BOLD + hologram.getName() + " " + Colors.SECONDARY_SHADOW + "at x: " + (int) hologram.getX() + ", y: " + (int) hologram.getY() + ", z: " + (int) hologram.getZ() + " (lines: " + hologram.size() + ", world: \"" + hologram.getWorld().getName() + "\")");
+                sender.sendMessage(
+                        Colors.SECONDARY_SHADOW
+                                + "- "
+                                + Colors.SECONDARY
+                                + Colors.BOLD
+                                + hologram.getName()
+                                + " "
+                                + Colors.SECONDARY_SHADOW
+                                + "at x: "
+                                + (int) hologram.getX()
+                                + ", y: "
+                                + (int) hologram.getY()
+                                + ", z: "
+                                + (int) hologram.getZ()
+                                + " (lines: "
+                                + hologram.size()
+                                + ", world: \""
+                                + hologram.getWorld().getName()
+                                + "\")");
             }
         }
         if (page < totalPages) {
-            sender.sendMessage(Strings.TIP_PREFIX + "See the next page with /" + label + " list " + (page + 1));
+            sender.sendMessage(
+                    Strings.TIP_PREFIX
+                            + "See the next page with /"
+                            + label
+                            + " list "
+                            + (page + 1));
         }
-
     }
 
     @Override
@@ -76,5 +106,4 @@ public class ListCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.GENERIC;
     }
-
 }

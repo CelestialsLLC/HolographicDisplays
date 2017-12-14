@@ -13,5 +13,4 @@ public class TooWideException extends Exception {
     public int getWidth() {
         return width;
     }
-
 }

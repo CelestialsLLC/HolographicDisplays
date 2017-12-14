@@ -30,7 +30,6 @@ public class DeleteCommand extends HologramSubCommand {
         return 1;
     }
 
-
     @Override
     public void execute(CommandSender sender, String label, String[] args) throws CommandException {
         NamedHologram hologram = NamedHologramManager.getHologram(args[0].toLowerCase());
@@ -41,7 +40,8 @@ public class DeleteCommand extends HologramSubCommand {
         HologramDatabase.deleteHologram(hologram.getName());
 
         HologramDatabase.trySaveToDisk();
-        sender.sendMessage(Colors.PRIMARY + "You deleted the hologram '" + hologram.getName() + "'.");
+        sender.sendMessage(
+                Colors.PRIMARY + "You deleted the hologram '" + hologram.getName() + "'.");
     }
 
     @Override
@@ -53,5 +53,4 @@ public class DeleteCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.GENERIC;
     }
-
 }

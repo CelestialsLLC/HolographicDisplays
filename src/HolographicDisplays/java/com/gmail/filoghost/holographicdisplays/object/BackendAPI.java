@@ -28,20 +28,30 @@ public class BackendAPI {
         return hologram;
     }
 
-    public static boolean registerPlaceholder(Plugin plugin, String textPlaceholder, double refreshRate, PlaceholderReplacer replacer) {
+    public static boolean registerPlaceholder(
+            Plugin plugin,
+            String textPlaceholder,
+            double refreshRate,
+            PlaceholderReplacer replacer) {
         Validator.notNull(textPlaceholder, "textPlaceholder");
         Validator.isTrue(refreshRate >= 0, "refreshRate should be positive");
         Validator.notNull(replacer, "replacer");
 
-        return PlaceholdersRegister.register(new Placeholder(plugin, textPlaceholder, refreshRate, replacer));
+        return PlaceholdersRegister.register(
+                new Placeholder(plugin, textPlaceholder, refreshRate, replacer));
     }
 
-    public static boolean registerPlaceholder(Plugin plugin, String textPlaceholder, double refreshRate, PlaceholderReplacerInfo replacer) {
+    public static boolean registerPlaceholder(
+            Plugin plugin,
+            String textPlaceholder,
+            double refreshRate,
+            PlaceholderReplacerInfo replacer) {
         Validator.notNull(textPlaceholder, "textPlaceholder");
         Validator.isTrue(refreshRate >= 0, "refreshRate should be positive");
         Validator.notNull(replacer, "replacer");
 
-        return PlaceholdersRegister.register(new Placeholder(plugin, textPlaceholder, refreshRate, replacer));
+        return PlaceholdersRegister.register(
+                new Placeholder(plugin, textPlaceholder, refreshRate, replacer));
     }
 
     public static boolean isHologramEntity(Entity bukkitEntity) {
@@ -71,5 +81,4 @@ public class BackendAPI {
             unregisterPlaceholder(plugin, placeholder);
         }
     }
-
 }

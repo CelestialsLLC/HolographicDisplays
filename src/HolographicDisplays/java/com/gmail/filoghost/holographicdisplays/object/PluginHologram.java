@@ -26,5 +26,4 @@ public class PluginHologram extends CraftHologram {
         super.delete();
         PluginHologramManager.removeHologram(this);
     }
-
 }

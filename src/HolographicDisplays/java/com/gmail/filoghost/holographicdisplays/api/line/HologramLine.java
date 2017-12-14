@@ -15,9 +15,8 @@ public interface HologramLine {
     Hologram getParent();
 
     /**
-     * Removes this line from the parent Hologram. Since: v2.0.1
-     * Do not call if the Hologram has been deleted, an exception will be thrown.
+     * Removes this line from the parent Hologram. Since: v2.0.1 Do not call if the Hologram has
+     * been deleted, an exception will be thrown.
      */
     void removeLine();
-
 }

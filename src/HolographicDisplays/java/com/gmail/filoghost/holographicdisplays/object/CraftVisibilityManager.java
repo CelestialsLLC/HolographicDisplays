@@ -38,7 +38,10 @@ public class CraftVisibilityManager implements VisibilityManager {
     }
 
     private static boolean isNear(Player player, CraftHologram hologram) {
-        return player.isOnline() && player.getWorld().equals(hologram.getWorld()) && player.getLocation().distanceSquared(hologram.getLocation()) < VISIBILITY_DISTANCE_SQUARED;
+        return player.isOnline()
+                && player.getWorld().equals(hologram.getWorld())
+                && player.getLocation().distanceSquared(hologram.getLocation())
+                < VISIBILITY_DISTANCE_SQUARED;
     }
 
     @Override
@@ -55,13 +58,15 @@ public class CraftVisibilityManager implements VisibilityManager {
 
             for (Player player : VersionUtils.getOnlinePlayers()) {
 
-                if (playersVisibilityMap != null && playersVisibilityMap.containsKey(player.getName().toLowerCase())) {
+                if (playersVisibilityMap != null
+                        && playersVisibilityMap.containsKey(player.getName().toLowerCase())) {
                     // Has a specific value set
                     continue;
                 }
 
                 if (oldVisibleByDefault) {
-                    // If previously was visible, now is NOT visible by default, because the value has changed
+                    // If previously was visible, now is NOT visible by default, because the value
+                    // has changed
                     sendDestroyPacketIfNear(player, hologram);
                 } else {
                     // Opposite case
@@ -163,7 +168,10 @@ public class CraftVisibilityManager implements VisibilityManager {
 
     @Override
     public String toString() {
-        return "CraftVisibilityManager [playersMap=" + playersVisibilityMap + ", visibleByDefault=" + visibleByDefault + "]";
+        return "CraftVisibilityManager [playersMap="
+                + playersVisibilityMap
+                + ", visibleByDefault="
+                + visibleByDefault
+                + "]";
     }
-
 }

@@ -19,8 +19,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 /**
- * This class is only used by the plugin itself. Do not attempt to use it.
- * It still implements the old API, but it's temporary.
+ * This class is only used by the plugin itself. Do not attempt to use it. It still implements the
+ * old API, but it's temporary.
  */
 @SuppressWarnings("deprecation")
 public class CraftHologram implements Hologram, com.gmail.filoghost.holograms.api.Hologram {
@@ -122,12 +122,17 @@ public class CraftHologram implements Hologram, com.gmail.filoghost.holograms.ap
         lines.add(line);
         refreshSingleLines();
 
-        int maxLineLength = getMaxLineLength();
-        for (CraftHologramLine line1 : lines) {
-            if (line1 instanceof CraftTextLine) {
-                CraftTextLine newLine = (CraftTextLine) line1;
-                if (newLine.getText().length() < maxLineLength)
-                    newLine.setText(getNewText(newLine.getText(), maxLineLength - newLine.getText().length()));
+        if (Configuration.lineLengthAnalysis) {
+            int maxLineLength = getMaxLineLength();
+            for (CraftHologramLine line1 : lines) {
+                if (line1 instanceof CraftTextLine) {
+                    CraftTextLine newLine = (CraftTextLine) line1;
+                    if (newLine.getText().length() < maxLineLength)
+                        newLine.setText(
+                                getNewText(
+                                        newLine.getText(),
+                                        maxLineLength - newLine.getText().length()));
+                }
             }
         }
 
@@ -302,38 +307,66 @@ public class CraftHologram implements Hologram, com.gmail.filoghost.holograms.ap
      * Forces the entities to spawn, without checking if the chunk is loaded.
      */
     public void spawnEntities() {
-        Validator.isTrue(!deleted, "hologram already deleted");
+        if (Configuration.lineLengthAnalysis)
+            for (CraftHologramLine line : lines) {
+                Validator.isTrue(!deleted, "hologram already deleted");
 
-        despawnEntities();
+                despawnEntities();
 
-        double currentY = this.y;
-        boolean first = true;
+                double currentY = this.y;
+                boolean first = true;
 
-        int maxLineLength = getMaxLineLength();
-        for (CraftHologramLine line : lines) {
+                int maxLineLength = getMaxLineLength();
 
-            currentY -= line.getHeight();
+                currentY -= line.getHeight();
 
-            if (first) {
-                first = false;
-            } else {
-                currentY -= Configuration.spaceBetweenLines;
+                if (first) {
+                    first = false;
+                } else {
+                    currentY -= Configuration.spaceBetweenLines;
+                }
+
+                line.spawn(world, x, currentY, z);
+                if (allowPlaceholders && line instanceof CraftTextLine) {
+                    CraftTextLine craftTextLine = (CraftTextLine) line;
+                    ((CraftTextLine) line).setText(craftTextLine.getText());
+
+                    if (craftTextLine.getText().length() < maxLineLength)
+                        craftTextLine.setText(
+                                getNewText(
+                                        craftTextLine.getText(),
+                                        maxLineLength - craftTextLine.getText().length()));
+
+                    PlaceholdersManager.trackIfNecessary(craftTextLine, this);
+                }
             }
+        else {
+            Validator.isTrue(!deleted, "hologram already deleted");
 
-            line.spawn(world, x, currentY, z);
-            if (allowPlaceholders && line instanceof CraftTextLine) {
-                CraftTextLine craftTextLine = (CraftTextLine) line;
-                if (craftTextLine.getText().length() < maxLineLength)
-                    craftTextLine.setText(getNewText(craftTextLine.getText(), maxLineLength - craftTextLine.getText().length()));
+            despawnEntities();
 
-                PlaceholdersManager.trackIfNecessary(craftTextLine, this);
+            double currentY = this.y;
+            boolean first = true;
+
+            for (CraftHologramLine line : lines) {
+
+                currentY -= line.getHeight();
+
+                if (first) {
+                    first = false;
+                } else {
+                    currentY -= Configuration.spaceBetweenLines;
+                }
+
+                line.spawn(world, x, currentY, z);
+                if (allowPlaceholders && line instanceof CraftTextLine) {
+                    PlaceholdersManager.trackIfNecessary((CraftTextLine) line, this);
+                }
             }
         }
     }
 
-    /**
-     * Called by the PluginHologramManager when the chunk is unloaded.
-     */
+    /** Called by the PluginHologramManager when the chunk is unloaded. */
     public void despawnEntities() {
         for (CraftHologramLine piece : lines) {
             piece.despawn();
@@ -341,9 +374,7 @@ public class CraftHologram implements Hologram, com.gmail.filoghost.holograms.ap
     }
 
     public String getNewText(String text, int remaining) {
-        if (remaining != 0)
-            for (int i = 0; i < remaining; i++)
-                text += " ";
+        if (remaining != 0) for (int i = 0; i < remaining; i++) text += " ";
 
         return text;
     }
@@ -390,13 +421,22 @@ public class CraftHologram implements Hologram, com.gmail.filoghost.holograms.ap
 
     @Override
     public String toString() {
-        return "CraftHologram [world=" + world + ", x=" + x + ", y=" + y + ", z=" + z + ", lines=" + lines + ", deleted=" + deleted + "]";
+        return "CraftHologram [world="
+                + world
+                + ", x="
+                + x
+                + ", y="
+                + y
+                + ", z="
+                + z
+                + ", lines="
+                + lines
+                + ", deleted="
+                + deleted
+                + "]";
     }
 
-    /**
-     * Old API methods, will be removed soon
-     */
-
+    /** Old API methods, will be removed soon */
     @Override
     @Deprecated
     public boolean update() {
@@ -405,9 +445,7 @@ public class CraftHologram implements Hologram, com.gmail.filoghost.holograms.ap
 
     @Override
     @Deprecated
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     @Deprecated
@@ -467,9 +505,8 @@ public class CraftHologram implements Hologram, com.gmail.filoghost.holograms.ap
     }
 
     /**
-     * About: equals() and hashcode()
-     * Two holograms can never be equal. Even if they have the same position and the same elements, they are still two different objects.
-     * The equals and hashcode methods are not overriden, two holograms are equal only if they have the same memory address.
+     * About: equals() and hashcode() Two holograms can never be equal. Even if they have the same
+     * position and the same elements, they are still two different objects. The equals and hashcode
+     * methods are not overriden, two holograms are equal only if they have the same memory address.
      */
-
 }

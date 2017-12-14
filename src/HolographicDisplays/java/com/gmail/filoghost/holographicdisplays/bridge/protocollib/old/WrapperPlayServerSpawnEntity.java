@@ -47,7 +47,9 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
     // Useful constructor
     private static PacketContainer fromEntity(Entity entity, int type, int objectData) {
         if (entityConstructor == null)
-            entityConstructor = ProtocolLibrary.getProtocolManager().createPacketConstructor(TYPE, entity, type, objectData);
+            entityConstructor =
+                    ProtocolLibrary.getProtocolManager()
+                            .createPacketConstructor(TYPE, entity, type, objectData);
         return entityConstructor.createPacket(entity, type, objectData);
     }
 
@@ -109,8 +111,8 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
 
     /**
      * Retrieve the x position of the object.
-     * <p>
-     * Note that the coordinate is rounded off to the nearest 1/32 of a meter.
+     *
+     * <p>Note that the coordinate is rounded off to the nearest 1/32 of a meter.
      *
      * @return The current X
      */
@@ -129,8 +131,8 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
 
     /**
      * Retrieve the y position of the object.
-     * <p>
-     * Note that the coordinate is rounded off to the nearest 1/32 of a meter.
+     *
+     * <p>Note that the coordinate is rounded off to the nearest 1/32 of a meter.
      *
      * @return The current y
      */
@@ -149,8 +151,8 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
 
     /**
      * Retrieve the z position of the object.
-     * <p>
-     * Note that the coordinate is rounded off to the nearest 1/32 of a meter.
+     *
+     * <p>Note that the coordinate is rounded off to the nearest 1/32 of a meter.
      *
      * @return The current z
      */
@@ -169,8 +171,8 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
 
     /**
      * Retrieve the optional speed x.
-     * <p>
-     * This is ignored if {@link #getObjectData()} is zero.
+     *
+     * <p>This is ignored if {@link #getObjectData()} is zero.
      *
      * @return The optional speed x.
      */
@@ -189,8 +191,8 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
 
     /**
      * Retrieve the optional speed y.
-     * <p>
-     * This is ignored if {@link #getObjectData()} is zero.
+     *
+     * <p>This is ignored if {@link #getObjectData()} is zero.
      *
      * @return The optional speed y.
      */
@@ -209,8 +211,8 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
 
     /**
      * Retrieve the optional speed z.
-     * <p>
-     * This is ignored if {@link #getObjectData()} is zero.
+     *
+     * <p>This is ignored if {@link #getObjectData()} is zero.
      *
      * @return The optional speed z.
      */
@@ -265,8 +267,9 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
 
     /**
      * Retrieve object data.
-     * <p>
-     * The content depends on the object type:
+     *
+     * <p>The content depends on the object type:
+     *
      * <table border="1" cellpadding="4">
      * <tr>
      * <th>Object Type:</th>
@@ -303,8 +306,8 @@ public class WrapperPlayServerSpawnEntity extends AbstractPacket {
 
     /**
      * Set object Data.
-     * <p>
-     * The content depends on the object type. See {@link #getObjectData()} for more information.
+     *
+     * <p>The content depends on the object type. See {@link #getObjectData()} for more information.
      *
      * @param value - new object data.
      */

@@ -20,5 +20,4 @@ public interface TouchableLine extends HologramLine {
      * @param touchHandler the new TouchHandler, can be null.
      */
     void setTouchHandler(TouchHandler touchHandler);
-
 }

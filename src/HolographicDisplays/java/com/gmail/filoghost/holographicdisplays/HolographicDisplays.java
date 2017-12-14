@@ -83,7 +83,10 @@ public class HolographicDisplays extends JavaPlugin {
     @Override
     public void onEnable() {
         if (instance != null || System.getProperty("HolographicDisplaysLoaded") != null)
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[HolographicDisplays] Please do not use /reload or plugin reloaders. Use the command \"/holograms reload\" instead. You will receive no support for doing this operation.");
+            Bukkit.getConsoleSender()
+                    .sendMessage(
+                            ChatColor.RED
+                                    + "[HolographicDisplays] Please do not use /reload or plugin reloaders. Use the command \"/holograms reload\" instead. You will receive no support for doing this operation.");
 
         System.setProperty("HolographicDisplaysLoaded", "true");
         instance = this;
@@ -107,8 +110,7 @@ public class HolographicDisplays extends JavaPlugin {
                     "     This version of HolographicDisplays only",
                     "     works on server version 1.8.8",
                     "     The plugin will be disabled.",
-                    "******************************************************"
-            );
+                    "******************************************************");
             return;
         }
 
@@ -130,8 +132,7 @@ public class HolographicDisplays extends JavaPlugin {
                     "     HolographicDisplays was unable to register",
                     "     custom entities, the plugin will be disabled.",
                     "     Are you using the correct Bukkit/Spigot version?",
-                    "******************************************************"
-            );
+                    "******************************************************");
             return;
         }
 
@@ -142,18 +143,26 @@ public class HolographicDisplays extends JavaPlugin {
                 String requiredVersionError = null;
 
                 try {
-                    String protocolVersion = Bukkit.getPluginManager().getPlugin("ProtocolLib").getDescription().getVersion();
-                    Matcher versionNumbersMatcher = Pattern.compile("([0-9\\.])+").matcher(protocolVersion);
+                    String protocolVersion =
+                            Bukkit.getPluginManager()
+                                    .getPlugin("ProtocolLib")
+                                    .getDescription()
+                                    .getVersion();
+                    Matcher versionNumbersMatcher =
+                            Pattern.compile("([0-9\\.])+").matcher(protocolVersion);
 
                     if (versionNumbersMatcher.find()) {
                         String versionNumbers = versionNumbersMatcher.group();
 
                         if (MinecraftVersion.get() == MinecraftVersion.v1_7) {
-                            if (!VersionUtils.isVersionBetweenEqual(versionNumbers, "3.6.4", "3.7.0")) {
+                            if (!VersionUtils.isVersionBetweenEqual(
+                                    versionNumbers, "3.6.4", "3.7.0")) {
                                 requiredVersionError = "between 3.6.4 and 3.7.0";
                             }
                         } else if (MinecraftVersion.get() == MinecraftVersion.v1_8) {
-                            if (!VersionUtils.isVersionBetweenEqual(versionNumbers, "3.6.4", "3.6.5") && !VersionUtils.isVersionGreaterEqual(versionNumbers, "4.1")) {
+                            if (!VersionUtils.isVersionBetweenEqual(
+                                    versionNumbers, "3.6.4", "3.6.5")
+                                    && !VersionUtils.isVersionGreaterEqual(versionNumbers, "4.1")) {
                                 requiredVersionError = "between 3.6.4 and 3.6.5 or higher than 4.1";
                             }
                         } else {
@@ -167,19 +176,30 @@ public class HolographicDisplays extends JavaPlugin {
                     }
 
                 } catch (Exception e) {
-                    getLogger().warning("Could not check ProtocolLib version (" + e.getClass().getName() + ": " + e.getMessage() + "), enabling support anyway and hoping for the best. If you get errors, please contact the author.");
+                    getLogger()
+                            .warning(
+                                    "Could not check ProtocolLib version ("
+                                            + e.getClass().getName()
+                                            + ": "
+                                            + e.getMessage()
+                                            + "), enabling support anyway and hoping for the best. If you get errors, please contact the author.");
                 }
 
                 if (requiredVersionError == null) {
                     ProtocolLibHook protocolLibHook;
 
-                    if (VersionUtils.classExists("com.comphenix.protocol.wrappers.WrappedDataWatcher$WrappedDataWatcherObject")) {
+                    if (VersionUtils.classExists(
+                            "com.comphenix.protocol.wrappers.WrappedDataWatcher$WrappedDataWatcherObject")) {
                         // Only the new version contains this class
                         getLogger().info("Found ProtocolLib, using new version.");
-                        protocolLibHook = new com.gmail.filoghost.holographicdisplays.bridge.protocollib.current.ProtocolLibHookImpl();
+                        protocolLibHook =
+                                new com.gmail.filoghost.holographicdisplays.bridge.protocollib
+                                        .current.ProtocolLibHookImpl();
                     } else {
                         getLogger().info("Found ProtocolLib, using old version.");
-                        protocolLibHook = new com.gmail.filoghost.holographicdisplays.bridge.protocollib.old.ProtocolLibHookImpl();
+                        protocolLibHook =
+                                new com.gmail.filoghost.holographicdisplays.bridge.protocollib.old
+                                        .ProtocolLibHookImpl();
                     }
 
                     if (protocolLibHook.hook(this, nmsManager)) {
@@ -188,9 +208,13 @@ public class HolographicDisplays extends JavaPlugin {
                     }
 
                 } else {
-                    Bukkit.getConsoleSender().sendMessage(
-                            ChatColor.RED + "[Holographic Displays] Detected incompatible version of ProtocolLib, support disabled. " +
-                                    "For this server version you must be using a ProtocolLib version " + requiredVersionError + ".");
+                    Bukkit.getConsoleSender()
+                            .sendMessage(
+                                    ChatColor.RED
+                                            + "[Holographic Displays] Detected incompatible version of ProtocolLib, support disabled. "
+                                            + "For this server version you must be using a ProtocolLib version "
+                                            + requiredVersionError
+                                            + ".");
                 }
             }
 
@@ -213,24 +237,45 @@ public class HolographicDisplays extends JavaPlugin {
         BungeeServerTracker.startTask(Configuration.bungeeRefreshSeconds);
 
         // Start repeating tasks.
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new BungeeCleanupTask(), 5 * 60 * 20, 5 * 60 * 20);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new WorldPlayerCounterTask(), 0L, 3 * 20);
+        Bukkit.getScheduler()
+                .scheduleSyncRepeatingTask(this, new BungeeCleanupTask(), 5 * 60 * 20, 5 * 60 * 20);
+        Bukkit.getScheduler()
+                .scheduleSyncRepeatingTask(this, new WorldPlayerCounterTask(), 0L, 3 * 20);
 
         Set<String> savedHologramsNames = HologramDatabase.getHolograms();
         if (savedHologramsNames != null && savedHologramsNames.size() > 0) {
             for (String singleHologramName : savedHologramsNames) {
                 try {
-                    NamedHologram singleHologram = HologramDatabase.loadHologram(singleHologramName);
+                    NamedHologram singleHologram =
+                            HologramDatabase.loadHologram(singleHologramName);
                     NamedHologramManager.addHologram(singleHologram);
                 } catch (HologramNotFoundException e) {
-                    getLogger().warning("Hologram '" + singleHologramName + "' not found, skipping it.");
+                    getLogger()
+                            .warning(
+                                    "Hologram '"
+                                            + singleHologramName
+                                            + "' not found, skipping it.");
                 } catch (InvalidFormatException e) {
-                    getLogger().warning("Hologram '" + singleHologramName + "' has an invalid location format.");
+                    getLogger()
+                            .warning(
+                                    "Hologram '"
+                                            + singleHologramName
+                                            + "' has an invalid location format.");
                 } catch (WorldNotFoundException e) {
-                    getLogger().warning("Hologram '" + singleHologramName + "' was in the world '" + e.getMessage() + "' but it wasn't loaded.");
+                    getLogger()
+                            .warning(
+                                    "Hologram '"
+                                            + singleHologramName
+                                            + "' was in the world '"
+                                            + e.getMessage()
+                                            + "' but it wasn't loaded.");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    getLogger().warning("Unhandled exception while loading the hologram '" + singleHologramName + "'. Please contact the developer.");
+                    getLogger()
+                            .warning(
+                                    "Unhandled exception while loading the hologram '"
+                                            + singleHologramName
+                                            + "'. Please contact the developer.");
                 }
             }
         }
@@ -242,8 +287,7 @@ public class HolographicDisplays extends JavaPlugin {
                     "     the command \"holograms\". Do not modify",
                     "     plugin.yml removing commands, if this is",
                     "     the case.",
-                    "******************************************************"
-            );
+                    "******************************************************");
             return;
         }
 
@@ -273,5 +317,4 @@ public class HolographicDisplays extends JavaPlugin {
     public HologramsCommandHandler getCommandHandler() {
         return commandHandler;
     }
-
 }

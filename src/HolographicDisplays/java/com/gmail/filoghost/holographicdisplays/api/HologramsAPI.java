@@ -10,11 +10,10 @@ import org.bukkit.plugin.Plugin;
 import java.util.Collection;
 
 /**
- * This the main class of the <b>Holographic Displays API</b>.
- * It provides methods to create holograms and to register custom placeholders.
+ * This the main class of the <b>Holographic Displays API</b>. It provides methods to create
+ * holograms and to register custom placeholders.
  */
 public class HologramsAPI {
-
 
     /**
      * Creates a hologram at given location.
@@ -27,48 +26,58 @@ public class HologramsAPI {
         return BackendAPI.createHologram(plugin, source);
     }
 
-
     /**
      * Finds all the holograms created by a given plugin.
      *
      * @param plugin the plugin to search for in holograms
-     * @return the holograms created by a plugin. the Collection is a copy
-     * and modifying it has no effect on the holograms.
+     * @return the holograms created by a plugin. the Collection is a copy and modifying it has no
+     *     effect on the holograms.
      */
     public static Collection<Hologram> getHolograms(Plugin plugin) {
         return BackendAPI.getHolograms(plugin);
     }
 
-
     /**
-     * Registers a new placeholder that can be used in holograms created with commands.
-     * With this method, you can basically expand the core of HolographicDisplays.
+     * Registers a new placeholder that can be used in holograms created with commands. With this
+     * method, you can basically expand the core of HolographicDisplays.
      *
-     * @param plugin          the owner plugin of the placeholder
-     * @param textPlaceholder the text that the placeholder will be associated to (e.g.: "{onlinePlayers}")
-     * @param refreshRate     the refresh rate of the placeholder, in seconds. Keep in mind that the minimum is 0.1 seconds, and that will be rounded to tenths of seconds
-     * @param replacer        the implementation that will return the text to replace the placeholder, where the update() method is called every <b>refreshRate</b> seconds
+     * @param plugin the owner plugin of the placeholder
+     * @param textPlaceholder the text that the placeholder will be associated to (e.g.:
+     *     "{onlinePlayers}")
+     * @param refreshRate the refresh rate of the placeholder, in seconds. Keep in mind that the
+     *     minimum is 0.1 seconds, and that will be rounded to tenths of seconds
+     * @param replacer the implementation that will return the text to replace the placeholder,
+     *     where the update() method is called every <b>refreshRate</b> seconds
      * @return true if the registration was successfull, false if it was already registered
      */
-    public static boolean registerPlaceholder(Plugin plugin, String textPlaceholder, double refreshRate, PlaceholderReplacer replacer) {
+    public static boolean registerPlaceholder(
+            Plugin plugin,
+            String textPlaceholder,
+            double refreshRate,
+            PlaceholderReplacer replacer) {
         return BackendAPI.registerPlaceholder(plugin, textPlaceholder, refreshRate, replacer);
     }
 
-
     /**
-     * Registers a new placeholder that can be used in holograms created with commands.
-     * With this method, you can basically expand the core of HolographicDisplays.
+     * Registers a new placeholder that can be used in holograms created with commands. With this
+     * method, you can basically expand the core of HolographicDisplays.
      *
-     * @param plugin          the owner plugin of the placeholder
-     * @param textPlaceholder the text that the placeholder will be associated to (e.g.: "{onlinePlayers}")
-     * @param refreshRate     the refresh rate of the placeholder, in seconds. Keep in mind that the minimum is 0.1 seconds, and that will be rounded to tenths of seconds
-     * @param replacer        the implementation that will return the text to replace the placeholder, where the update() method is called every <b>refreshRate</b> seconds
+     * @param plugin the owner plugin of the placeholder
+     * @param textPlaceholder the text that the placeholder will be associated to (e.g.:
+     *     "{onlinePlayers}")
+     * @param refreshRate the refresh rate of the placeholder, in seconds. Keep in mind that the
+     *     minimum is 0.1 seconds, and that will be rounded to tenths of seconds
+     * @param replacer the implementation that will return the text to replace the placeholder,
+     *     where the update() method is called every <b>refreshRate</b> seconds
      * @return true if the registration was successfull, false if it was already registered
      */
-    public static boolean registerPlaceholder(Plugin plugin, String textPlaceholder, double refreshRate, PlaceholderReplacerInfo replacer) {
+    public static boolean registerPlaceholder(
+            Plugin plugin,
+            String textPlaceholder,
+            double refreshRate,
+            PlaceholderReplacerInfo replacer) {
         return BackendAPI.registerPlaceholder(plugin, textPlaceholder, refreshRate, replacer);
     }
-
 
     /**
      * Finds all the placeholders registered by a given plugin.
@@ -80,11 +89,10 @@ public class HologramsAPI {
         return BackendAPI.getRegisteredPlaceholders(plugin);
     }
 
-
     /**
      * Unregister a placeholder created by a plugin.
      *
-     * @param plugin          the plugin that owns the placeholder
+     * @param plugin the plugin that owns the placeholder
      * @param textPlaceholder the placeholder to remove
      * @return true if found and removed, false otherwise
      */
@@ -92,17 +100,15 @@ public class HologramsAPI {
         return BackendAPI.unregisterPlaceholder(plugin, textPlaceholder);
     }
 
-
     /**
-     * Resets and removes all the placeholders registered by a plugin. This is useful
-     * when you have configurable placeholders and you want to remove all of them.
+     * Resets and removes all the placeholders registered by a plugin. This is useful when you have
+     * configurable placeholders and you want to remove all of them.
      *
      * @param plugin the plugin that owns the placeholders
      */
     public static void unregisterPlaceholders(Plugin plugin) {
         BackendAPI.unregisterPlaceholders(plugin);
     }
-
 
     /**
      * Checks if an entity is part of a hologram.
@@ -113,5 +119,4 @@ public class HologramsAPI {
     public static boolean isHologramEntity(Entity bukkitEntity) {
         return BackendAPI.isHologramEntity(bukkitEntity);
     }
-
 }

@@ -37,7 +37,6 @@ public class EditCommand extends HologramSubCommand {
         return 1;
     }
 
-
     @Override
     public void execute(CommandSender sender, String label, String[] args) throws CommandException {
         String name = args[0].toLowerCase();
@@ -48,7 +47,20 @@ public class EditCommand extends HologramSubCommand {
         sender.sendMessage(Strings.formatTitle("How to edit the hologram '" + name + "'"));
         for (HologramSubCommand subCommand : mainCommandHandler.getSubCommands()) {
             if (subCommand.getType() == SubCommandType.EDIT_LINES) {
-                String usage = "/" + label + " " + subCommand.getName() + (subCommand.getPossibleArguments().length() > 0 ? " " + subCommand.getPossibleArguments().replace("<hologramName>", hologram.getName()).replace("<hologram>", hologram.getName()) : "");
+                String usage =
+                        "/"
+                                + label
+                                + " "
+                                + subCommand.getName()
+                                + (subCommand.getPossibleArguments().length() > 0
+                                ? " "
+                                + subCommand
+                                .getPossibleArguments()
+                                .replace(
+                                        "<hologramName>",
+                                        hologram.getName())
+                                .replace("<hologram>", hologram.getName())
+                                : "");
 
                 if (CommandValidator.isPlayerSender(sender)) {
 
@@ -58,7 +70,8 @@ public class EditCommand extends HologramSubCommand {
                         help.add(Colors.SECONDARY_SHADOW + tutLine);
                     }
 
-                    HolographicDisplays.getNMSManager().newFancyMessage(usage)
+                    HolographicDisplays.getNMSManager()
+                            .newFancyMessage(usage)
                             .color(ChatColor.AQUA)
                             .suggest(usage)
                             .tooltip(Utils.join(help, "\n"))
@@ -83,5 +96,4 @@ public class EditCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.GENERIC;
     }
-
 }

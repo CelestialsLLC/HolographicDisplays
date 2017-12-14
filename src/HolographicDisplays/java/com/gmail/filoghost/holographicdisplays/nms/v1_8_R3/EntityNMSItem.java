@@ -44,7 +44,10 @@ public class EntityNMSItem extends EntityItem implements NMSItem {
         }
 
         if (parentPiece.getPickupHandler() != null && human instanceof EntityPlayer) {
-            MainListener.handleItemLinePickup((Player) human.getBukkitEntity(), parentPiece.getPickupHandler(), parentPiece.getParent());
+            MainListener.handleItemLinePickup(
+                    (Player) human.getBukkitEntity(),
+                    parentPiece.getPickupHandler(),
+                    parentPiece.getParent());
             // It is never added to the inventory.
         }
     }

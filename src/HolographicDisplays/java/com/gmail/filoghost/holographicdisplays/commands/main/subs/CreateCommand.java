@@ -40,10 +40,13 @@ public class CreateCommand extends HologramSubCommand {
         String name = args[0].toLowerCase();
 
         if (!name.matches("[a-zA-Z0-9_\\-]+")) {
-            throw new CommandException("The name must contain only alphanumeric chars, underscores and hyphens.");
+            throw new CommandException(
+                    "The name must contain only alphanumeric chars, underscores and hyphens.");
         }
 
-        CommandValidator.isTrue(!NamedHologramManager.isExistingHologram(name), "A hologram with that name already exists.");
+        CommandValidator.isTrue(
+                !NamedHologramManager.isExistingHologram(name),
+                "A hologram with that name already exists.");
 
         Location spawnLoc = player.getLocation();
         boolean moveUp = player.isOnGround();
@@ -58,12 +61,32 @@ public class CreateCommand extends HologramSubCommand {
         if (args.length > 1) {
 
             String text = Utils.join(args, " ", 1, args.length);
-            CommandValidator.isTrue(!text.equalsIgnoreCase("{empty}"), "The first line should not be empty.");
+            CommandValidator.isTrue(
+                    !text.equalsIgnoreCase("{empty}"), "The first line should not be empty.");
 
             hologram.getLinesUnsafe().add(HologramDatabase.readLineFromString(text, hologram));
-            player.sendMessage(Colors.SECONDARY_SHADOW + "(Change the lines with /" + label + " edit " + hologram.getName() + ")");
+            player.sendMessage(
+                    Colors.SECONDARY_SHADOW
+                            + "(Change the lines with /"
+                            + label
+                            + " edit "
+                            + hologram.getName()
+                            + ")");
         } else {
-            hologram.appendTextLine("Default hologram. Change it with " + Colors.PRIMARY + "/" + label + " edit " + hologram.getName());
+            hologram.appendTextLine(
+                    "Default hologram. Change it with "
+                            + Colors.PRIMARY
+                            + "/"
+                            + label
+                            + " edit "
+                            + hologram.getName());
+            hologram.appendTextLine(
+                    "Add touchhandler to line using "
+                            + Colors.PRIMARY
+                            + "/holo touchhandler "
+                            + Colors.ERROR
+                            + hologram.getName()
+                            + " add 1 true This Is Test Text.");
         }
 
         hologram.refreshAll();
@@ -73,10 +96,17 @@ public class CreateCommand extends HologramSubCommand {
         Location look = player.getLocation();
         look.setPitch(90);
         player.teleport(look, TeleportCause.PLUGIN);
-        player.sendMessage(Colors.PRIMARY + "You created a hologram named '" + hologram.getName() + "'.");
+        player.sendMessage(
+                Colors.PRIMARY + "You created a hologram named '" + hologram.getName() + "'.");
 
         if (moveUp) {
-            player.sendMessage(Colors.SECONDARY_SHADOW + "(You were on the ground, the hologram was automatically moved up. If you use /" + label + " movehere " + hologram.getName() + ", the hologram will be moved to your feet)");
+            player.sendMessage(
+                    Colors.SECONDARY_SHADOW
+                            + "(You were on the ground, the hologram was automatically moved up. If you use /"
+                            + label
+                            + " movehere "
+                            + hologram.getName()
+                            + ", the hologram will be moved to your feet)");
         }
     }
 
@@ -92,5 +122,4 @@ public class CreateCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.GENERIC;
     }
-
 }

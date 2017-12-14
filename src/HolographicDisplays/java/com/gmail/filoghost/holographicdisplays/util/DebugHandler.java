@@ -18,7 +18,11 @@ public class DebugHandler {
 
     public static void handleSpawnFail(HologramLine parentPiece) {
         if (Configuration.debug) {
-            HolographicDisplays.getInstance().getLogger().severe("[Debug] Coulnd't spawn entity for this hologram: " + parentPiece.getParent().toString());
+            HolographicDisplays.getInstance()
+                    .getLogger()
+                    .severe(
+                            "[Debug] Coulnd't spawn entity for this hologram: "
+                                    + parentPiece.getParent().toString());
         }
     }
 
@@ -27,6 +31,4 @@ public class DebugHandler {
             e.printStackTrace();
         }
     }
-
-
 }

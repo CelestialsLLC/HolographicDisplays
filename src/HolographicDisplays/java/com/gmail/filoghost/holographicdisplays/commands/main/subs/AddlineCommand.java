@@ -43,7 +43,8 @@ public class AddlineCommand extends HologramSubCommand {
 
         // Check material validity
         if (line.toLowerCase().startsWith("icon:")) {
-            String iconMaterial = ItemUtils.stripSpacingChars(line.substring("icon:".length(), line.length()));
+            String iconMaterial =
+                    ItemUtils.stripSpacingChars(line.substring("icon:".length(), line.length()));
 
             if (iconMaterial.contains(":")) {
                 iconMaterial = iconMaterial.split(":")[0];
@@ -53,6 +54,7 @@ public class AddlineCommand extends HologramSubCommand {
             CommandValidator.notNull(mat, "Invalid icon material.");
         }
 
+        if (!line.contains("|||")) line += "|||, ";
         hologram.getLinesUnsafe().add(HologramDatabase.readLineFromString(line, hologram));
         hologram.refreshAll();
 
@@ -71,5 +73,4 @@ public class AddlineCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.EDIT_LINES;
     }
-
 }

@@ -69,6 +69,4 @@ public class NullBoundingBox extends AxisAlignedBB {
     public AxisAlignedBB shrink(double arg0, double arg1, double arg2) {
         return this;
     }
-
-
 }

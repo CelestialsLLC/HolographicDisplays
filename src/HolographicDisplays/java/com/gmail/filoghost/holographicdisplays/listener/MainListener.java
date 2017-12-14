@@ -48,14 +48,27 @@ public class MainListener implements Listener {
         return player.getGameMode().toString().equals("SPECTATOR");
     }
 
-    public static void handleItemLinePickup(Player player, PickupHandler pickupHandler, CraftHologram hologram) {
+    public static void handleItemLinePickup(
+            Player player, PickupHandler pickupHandler, CraftHologram hologram) {
         try {
             if (hologram.getVisibilityManager().isVisibleTo(player)) {
                 pickupHandler.onPickup(player);
             }
         } catch (Throwable t) {
-            Plugin plugin = hologram instanceof PluginHologram ? ((PluginHologram) hologram).getOwner() : HolographicDisplays.getInstance();
-            HolographicDisplays.getInstance().getLogger().log(Level.WARNING, "The plugin " + plugin.getName() + " generated an exception when the player " + player.getName() + " picked up an item from a hologram.", t);
+            Plugin plugin =
+                    hologram instanceof PluginHologram
+                            ? ((PluginHologram) hologram).getOwner()
+                            : HolographicDisplays.getInstance();
+            HolographicDisplays.getInstance()
+                    .getLogger()
+                    .log(
+                            Level.WARNING,
+                            "The plugin "
+                                    + plugin.getName()
+                                    + " generated an exception when the player "
+                                    + player.getName()
+                                    + " picked up an item from a hologram.",
+                            t);
         }
     }
 
@@ -79,11 +92,13 @@ public class MainListener implements Listener {
         // Other plugins could call this event wrongly, check if the chunk is actually loaded.
         if (chunk.isLoaded()) {
 
-            // In case another plugin loads the chunk asynchronously always make sure to load the holograms on the main thread.
+            // In case another plugin loads the chunk asynchronously always make sure to load the
+            // holograms on the main thread.
             if (Bukkit.isPrimaryThread()) {
                 processChunkLoad(chunk);
             } else {
-                Bukkit.getScheduler().runTask(HolographicDisplays.getInstance(), () -> processChunkLoad(chunk));
+                Bukkit.getScheduler()
+                        .runTask(HolographicDisplays.getInstance(), () -> processChunkLoad(chunk));
             }
         }
     }
@@ -128,11 +143,14 @@ public class MainListener implements Listener {
             Player clicker = event.getPlayer();
             NMSEntityBase entityBase = nmsManager.getNMSEntityBase(event.getRightClicked());
 
-            if (entityBase != null && entityBase.getHologramLine() instanceof CraftTouchSlimeLine && !isSpectatorMode(clicker)) {
+            if (entityBase != null
+                    && entityBase.getHologramLine() instanceof CraftTouchSlimeLine
+                    && !isSpectatorMode(clicker)) {
 
                 CraftTouchSlimeLine touchSlime = (CraftTouchSlimeLine) entityBase.getHologramLine();
 
-                if (touchSlime.getTouchablePiece().getTouchHandler() != null && touchSlime.getParent().getVisibilityManager().isVisibleTo(clicker)) {
+                if (touchSlime.getTouchablePiece().getTouchHandler() != null
+                        && touchSlime.getParent().getVisibilityManager().isVisibleTo(clicker)) {
 
                     Long lastClick = anticlickSpam.get(clicker);
                     if (lastClick != null && System.currentTimeMillis() - lastClick < 100) {
@@ -144,8 +162,20 @@ public class MainListener implements Listener {
                     try {
                         touchSlime.getTouchablePiece().getTouchHandler().onTouch(event.getPlayer());
                     } catch (Throwable t) {
-                        Plugin plugin = touchSlime.getParent() instanceof PluginHologram ? ((PluginHologram) touchSlime.getParent()).getOwner() : HolographicDisplays.getInstance();
-                        HolographicDisplays.getInstance().getLogger().log(Level.WARNING, "The plugin " + plugin.getName() + " generated an exception when the player " + event.getPlayer().getName() + " touched a hologram.", t);
+                        Plugin plugin =
+                                touchSlime.getParent() instanceof PluginHologram
+                                        ? ((PluginHologram) touchSlime.getParent()).getOwner()
+                                        : HolographicDisplays.getInstance();
+                        HolographicDisplays.getInstance()
+                                .getLogger()
+                                .log(
+                                        Level.WARNING,
+                                        "The plugin "
+                                                + plugin.getName()
+                                                + " generated an exception when the player "
+                                                + event.getPlayer().getName()
+                                                + " touched a hologram.",
+                                        t);
                     }
                 }
             }
@@ -156,8 +186,20 @@ public class MainListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         if (Configuration.updateNotification && HolographicDisplays.getNewVersion() != null) {
             if (event.getPlayer().hasPermission(Strings.BASE_PERM + "update")) {
-                event.getPlayer().sendMessage(Colors.PRIMARY_SHADOW + "[HolographicDisplays] " + Colors.PRIMARY + "Found an update: " + HolographicDisplays.getNewVersion() + ". Download:");
-                event.getPlayer().sendMessage(Colors.PRIMARY_SHADOW + ">> " + Colors.PRIMARY + "http://dev.bukkit.org/bukkit-plugins/holographic-displays");
+                event.getPlayer()
+                        .sendMessage(
+                                Colors.PRIMARY_SHADOW
+                                        + "[HolographicDisplays] "
+                                        + Colors.PRIMARY
+                                        + "Found an update: "
+                                        + HolographicDisplays.getNewVersion()
+                                        + ". Download:");
+                event.getPlayer()
+                        .sendMessage(
+                                Colors.PRIMARY_SHADOW
+                                        + ">> "
+                                        + Colors.PRIMARY
+                                        + "http://dev.bukkit.org/bukkit-plugins/holographic-displays");
             }
         }
     }

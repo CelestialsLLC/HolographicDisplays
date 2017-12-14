@@ -3,8 +3,7 @@ package com.gmail.filoghost.holographicdisplays.disk;
 import java.util.Arrays;
 
 public enum ConfigNode {
-
-    SPACE_BETWEEN_LINES("space-between-lines", 0),
+    SPACE_BETWEEN_LINES("removeLineSpaces", false),
     IMAGES_SYMBOL("images.symbol", "[x]"),
     TRANSPARENCY_SPACE("images.transparency.space", " [|] "),
     TRANSPARENCY_COLOR("images.transparency.color", "&7"),
@@ -17,10 +16,16 @@ public enum ConfigNode {
     BUNGEE_PINGER_ONLINE_FORMAT("bungee.pinger.status.online", "&aOnline"),
     BUNGEE_PINGER_OFFLINE_FORMAT("bungee.pinger.status.offline", "&cOffline"),
     BUNGEE_PINGER_TRIM_MOTD("bungee.pinger.motd-remove-leading-trailing-spaces", true),
-    BUNGEE_PINGER_SERVERS("bungee.pinger.servers", Arrays.asList("hub: 127.0.0.1:25565", "survival: 127.0.0.1:25566", "minigames: 127.0.0.1:25567")),
+    BUNGEE_PINGER_SERVERS(
+            "bungee.pinger.servers",
+            Arrays.asList(
+                    "hub: 127.0.0.1:25565",
+                    "survival: 127.0.0.1:25566",
+                    "minigames: 127.0.0.1:25567")),
     TIME_FORMAT("time.format", "H:mm"),
     TIME_ZONE("time.zone", "GMT+1"),
-    DEBUG("debug", false);
+    DEBUG("debug", false),
+    LINE_LENGTH_ANALYSIS("lineLengthAnalysis", false);
 
     private final String path;
     private final Object value;
@@ -37,5 +42,4 @@ public enum ConfigNode {
     public Object getDefaultValue() {
         return value;
     }
-
 }

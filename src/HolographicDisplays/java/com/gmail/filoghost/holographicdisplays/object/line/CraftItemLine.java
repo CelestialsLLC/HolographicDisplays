@@ -62,11 +62,26 @@ public class CraftItemLine extends CraftTouchableLine implements ItemLine {
             Location loc = nmsItem.getBukkitEntityNMS().getLocation();
 
             if (MinecraftVersion.isGreaterEqualThan(MinecraftVersion.v1_9)) {
-                super.setTouchHandler(touchHandler, loc.getWorld(), loc.getX(), loc.getY() - getItemOffset(), loc.getZ());
+                super.setTouchHandler(
+                        touchHandler,
+                        loc.getWorld(),
+                        loc.getX(),
+                        loc.getY() - getItemOffset(),
+                        loc.getZ());
             } else if (MinecraftVersion.isGreaterEqualThan(MinecraftVersion.v1_8)) {
-                super.setTouchHandler(touchHandler, loc.getWorld(), loc.getX(), loc.getY() - getItemOffset(), loc.getZ());
+                super.setTouchHandler(
+                        touchHandler,
+                        loc.getWorld(),
+                        loc.getX(),
+                        loc.getY() - getItemOffset(),
+                        loc.getZ());
             } else {
-                super.setTouchHandler(touchHandler, loc.getWorld(), loc.getX(), loc.getY() - getItemOffset(), loc.getZ());
+                super.setTouchHandler(
+                        touchHandler,
+                        loc.getWorld(),
+                        loc.getX(),
+                        loc.getY() - getItemOffset(),
+                        loc.getZ());
             }
 
         } else {
@@ -88,12 +103,18 @@ public class CraftItemLine extends CraftTouchableLine implements ItemLine {
 
             double offset = getItemOffset();
 
-            nmsItem = HolographicDisplays.getNMSManager().spawnNMSItem(world, x, y + offset, z, this, itemStack);
+            nmsItem =
+                    HolographicDisplays.getNMSManager()
+                            .spawnNMSItem(world, x, y + offset, z, this, itemStack);
 
             if (MinecraftVersion.isGreaterEqualThan(MinecraftVersion.v1_8)) {
-                nmsVehicle = HolographicDisplays.getNMSManager().spawnNMSArmorStand(world, x, y + offset, z, this);
+                nmsVehicle =
+                        HolographicDisplays.getNMSManager()
+                                .spawnNMSArmorStand(world, x, y + offset, z, this);
             } else {
-                nmsVehicle = HolographicDisplays.getNMSManager().spawnNMSWitherSkull(world, x, y + offset, z, this);
+                nmsVehicle =
+                        HolographicDisplays.getNMSManager()
+                                .spawnNMSWitherSkull(world, x, y + offset, z, this);
             }
 
             nmsItem.setPassengerOfNMS(nmsVehicle);
@@ -102,7 +123,6 @@ public class CraftItemLine extends CraftTouchableLine implements ItemLine {
             nmsVehicle.setLockTick(true);
         }
     }
-
 
     @Override
     public void despawn() {
@@ -138,7 +158,9 @@ public class CraftItemLine extends CraftTouchableLine implements ItemLine {
     public int[] getEntitiesIDs() {
         if (isSpawned()) {
             if (touchSlime != null) {
-                return ArrayUtils.addAll(new int[]{nmsVehicle.getIdNMS(), nmsItem.getIdNMS()}, touchSlime.getEntitiesIDs());
+                return ArrayUtils.addAll(
+                        new int[]{nmsVehicle.getIdNMS(), nmsItem.getIdNMS()},
+                        touchSlime.getEntitiesIDs());
             } else {
                 return new int[]{nmsVehicle.getIdNMS(), nmsItem.getIdNMS()};
             }
@@ -169,5 +191,4 @@ public class CraftItemLine extends CraftTouchableLine implements ItemLine {
     public String toString() {
         return "CraftItemLine [itemStack=" + itemStack + ", pickupHandler=" + pickupHandler + "]";
     }
-
 }

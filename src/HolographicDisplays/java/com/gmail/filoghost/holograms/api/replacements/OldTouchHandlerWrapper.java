@@ -9,7 +9,8 @@ public class OldTouchHandlerWrapper
     public com.gmail.filoghost.holograms.api.TouchHandler oldHandler;
     private CraftHologram hologram;
 
-    public OldTouchHandlerWrapper(CraftHologram hologram, com.gmail.filoghost.holograms.api.TouchHandler oldHandler) {
+    public OldTouchHandlerWrapper(
+            CraftHologram hologram, com.gmail.filoghost.holograms.api.TouchHandler oldHandler) {
         this.hologram = hologram;
         this.oldHandler = oldHandler;
     }

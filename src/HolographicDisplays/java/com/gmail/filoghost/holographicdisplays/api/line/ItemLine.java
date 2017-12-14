@@ -17,5 +17,4 @@ public interface ItemLine extends CollectableLine, TouchableLine {
      * @param itemStack the new item, should not be null.
      */
     void setItemStack(ItemStack itemStack);
-
 }

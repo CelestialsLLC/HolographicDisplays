@@ -34,7 +34,6 @@ public class BungeeChannel implements PluginMessageListener {
 
         switch (channel) {
             case "BungeeCord":
-
                 if (Configuration.useRedisBungee) {
                     // If we use RedisBungee, we must ignore this channel.
                     return;
@@ -42,7 +41,6 @@ public class BungeeChannel implements PluginMessageListener {
 
                 break;
             case "RedisBungee":
-
                 if (!Configuration.useRedisBungee) {
                     // Same as above, just the opposite case.
                     return;
@@ -79,7 +77,6 @@ public class BungeeChannel implements PluginMessageListener {
         }
     }
 
-
     public void askPlayerCount(String server) {
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(b);
@@ -90,13 +87,23 @@ public class BungeeChannel implements PluginMessageListener {
         } catch (IOException e) {
             // It should not happen.
             e.printStackTrace();
-            HolographicDisplays.getInstance().getLogger().warning("I/O Exception while asking for player count on server '" + server + "'.");
+            HolographicDisplays.getInstance()
+                    .getLogger()
+                    .warning(
+                            "I/O Exception while asking for player count on server '"
+                                    + server
+                                    + "'.");
         }
 
         // OR, if you don't need to send it to a specific player
         Collection<? extends Player> players = VersionUtils.getOnlinePlayers();
         if (players.size() > 0) {
-            players.iterator().next().sendPluginMessage(HolographicDisplays.getInstance(), Configuration.useRedisBungee ? "RedisBungee" : "BungeeCord", b.toByteArray());
+            players.iterator()
+                    .next()
+                    .sendPluginMessage(
+                            HolographicDisplays.getInstance(),
+                            Configuration.useRedisBungee ? "RedisBungee" : "BungeeCord",
+                            b.toByteArray());
         }
     }
 }

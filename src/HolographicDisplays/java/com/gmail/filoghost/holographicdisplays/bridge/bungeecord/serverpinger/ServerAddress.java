@@ -22,5 +22,4 @@ public class ServerAddress {
     public String toString() {
         return ip + ":" + port;
     }
-
 }

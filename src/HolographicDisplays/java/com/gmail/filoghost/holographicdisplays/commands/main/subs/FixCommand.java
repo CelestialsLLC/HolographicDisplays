@@ -32,28 +32,48 @@ public class FixCommand extends HologramSubCommand {
         return 1;
     }
 
-
     @Override
     public void execute(CommandSender sender, String label, String[] args) throws CommandException {
 
-        CommandValidator.isTrue(!MinecraftVersion.isGreaterEqualThan(MinecraftVersion.v1_8), "This command is no longer necessary in 1.8+. The holograms already use the correct ambient light.");
+        CommandValidator.isTrue(
+                !MinecraftVersion.isGreaterEqualThan(MinecraftVersion.v1_8),
+                "This command is no longer necessary in 1.8+. The holograms already use the correct ambient light.");
 
         NamedHologram hologram = NamedHologramManager.getHologram(args[0].toLowerCase());
         CommandValidator.notNull(hologram, Strings.noSuchHologram(args[0].toLowerCase()));
 
         if (args.length <= 1) {
-            sender.sendMessage(Colors.PRIMARY + "This command will put a glowstone 16 blocks above the hologram to fix the lightning.");
-            sender.sendMessage(Colors.PRIMARY + "If you're sure, type " + Colors.SECONDARY + "/" + label + " fix " + args[0].toLowerCase() + " confirm");
+            sender.sendMessage(
+                    Colors.PRIMARY
+                            + "This command will put a glowstone 16 blocks above the hologram to fix the lightning.");
+            sender.sendMessage(
+                    Colors.PRIMARY
+                            + "If you're sure, type "
+                            + Colors.SECONDARY
+                            + "/"
+                            + label
+                            + " fix "
+                            + args[0].toLowerCase()
+                            + " confirm");
             return;
         }
 
         if (args[1].equalsIgnoreCase("confirm")) {
 
-            Block block = hologram.getWorld().getBlockAt((int) hologram.getX(), (int) hologram.getY() + 16, (int) hologram.getZ());
+            Block block =
+                    hologram.getWorld()
+                            .getBlockAt(
+                                    (int) hologram.getX(),
+                                    (int) hologram.getY() + 16,
+                                    (int) hologram.getZ());
             String oldType = block.getType().toString().replace("_", " ").toLowerCase();
             block.setType(Material.GLOWSTONE);
 
-            sender.sendMessage(Colors.PRIMARY + "Changed the block 16 block above the hologram (" + oldType + ") to glowstone!");
+            sender.sendMessage(
+                    Colors.PRIMARY
+                            + "Changed the block 16 block above the hologram ("
+                            + oldType
+                            + ") to glowstone!");
 
         } else {
             throw new CommandException(args[1] + " is not a valid confirmation! Use \"confirm\".");
@@ -62,7 +82,8 @@ public class FixCommand extends HologramSubCommand {
 
     @Override
     public List<String> getTutorial() {
-        return Arrays.asList("This command will fix the lightning of a hologram,",
+        return Arrays.asList(
+                "This command will fix the lightning of a hologram,",
                 "placing a glowstone block 16 blocks above it.",
                 "That's the only way to fix it (Only for 1.7 and lower).");
     }
@@ -75,5 +96,4 @@ public class FixCommand extends HologramSubCommand {
             return SubCommandType.GENERIC;
         }
     }
-
 }

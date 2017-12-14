@@ -12,5 +12,4 @@ public interface PlaceholderReplacerInfo {
      * @return the replacement
      */
     String replace(Hologram hologram);
-
 }

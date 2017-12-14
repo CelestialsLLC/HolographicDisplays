@@ -19,7 +19,8 @@ public class BungeeCleanupTask implements Runnable {
     public void run() {
 
         long now = System.currentTimeMillis();
-        Iterator<Entry<String, BungeeServerInfo>> iter = BungeeServerTracker.getTrackedServers().entrySet().iterator();
+        Iterator<Entry<String, BungeeServerInfo>> iter =
+                BungeeServerTracker.getTrackedServers().entrySet().iterator();
 
         while (iter.hasNext()) {
             Entry<String, BungeeServerInfo> next = iter.next();
@@ -28,9 +29,11 @@ public class BungeeCleanupTask implements Runnable {
             if (lastRequest != 0 && now - lastRequest > MAX_INACTIVITY) {
                 // Don't track that server anymore.
                 iter.remove();
-                DebugHandler.logToConsole("Removed bungee server \"" + next.getKey() + "\" from tracking due to inactivity.");
+                DebugHandler.logToConsole(
+                        "Removed bungee server \""
+                                + next.getKey()
+                                + "\" from tracking due to inactivity.");
             }
         }
     }
-
 }

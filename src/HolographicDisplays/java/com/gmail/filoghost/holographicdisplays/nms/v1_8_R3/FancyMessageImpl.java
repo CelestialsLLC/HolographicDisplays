@@ -102,7 +102,11 @@ public class FancyMessageImpl implements FancyMessage {
 
     @Override
     public void send(Player player) {
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(toJSONString())));
+        ((CraftPlayer) player)
+                .getHandle()
+                .playerConnection
+                .sendPacket(
+                        new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(toJSONString())));
     }
 
     private MessagePart latest() {
@@ -142,25 +146,32 @@ public class FancyMessageImpl implements FancyMessage {
             }
             if (styles != null) {
                 for (final ChatColor style : styles) {
-                    json.name(style == ChatColor.UNDERLINE ? "underlined" : style.name().toLowerCase()).value(true);
+                    json.name(
+                            style == ChatColor.UNDERLINE
+                                    ? "underlined"
+                                    : style.name().toLowerCase())
+                            .value(true);
                 }
             }
             if (clickActionName != null && clickActionData != null) {
                 json.name("clickEvent")
                         .beginObject()
-                        .name("action").value(clickActionName)
-                        .name("value").value(clickActionData)
+                        .name("action")
+                        .value(clickActionName)
+                        .name("value")
+                        .value(clickActionData)
                         .endObject();
             }
             if (hoverActionName != null && hoverActionData != null) {
                 json.name("hoverEvent")
                         .beginObject()
-                        .name("action").value(hoverActionName)
-                        .name("value").value(hoverActionData)
+                        .name("action")
+                        .value(hoverActionName)
+                        .name("value")
+                        .value(hoverActionData)
                         .endObject();
             }
             return json.endObject();
         }
-
     }
 }

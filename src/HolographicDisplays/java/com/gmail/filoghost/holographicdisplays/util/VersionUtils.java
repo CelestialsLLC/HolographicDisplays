@@ -17,13 +17,15 @@ public class VersionUtils {
     private static boolean getOnlinePlayersUseReflection;
 
     /**
-     * This method uses a regex to get the NMS package part that changes with every update.
-     * Example: v1_8_R1
+     * This method uses a regex to get the NMS package part that changes with every update. Example:
+     * v1_8_R1
      *
      * @return the NMS package part or null if not found.
      */
     public static String getBukkitVersion() {
-        Matcher matcher = Pattern.compile("v\\d+_\\d+_R\\d+").matcher(Bukkit.getServer().getClass().getPackage().getName());
+        Matcher matcher =
+                Pattern.compile("v\\d+_\\d+_R\\d+")
+                        .matcher(Bukkit.getServer().getClass().getPackage().getName());
         if (matcher.find()) {
             return matcher.group();
         } else {
@@ -32,8 +34,7 @@ public class VersionUtils {
     }
 
     /**
-     * This method uses a regex to get the version of this Minecraft release.
-     * Example: 1.8.1
+     * This method uses a regex to get the version of this Minecraft release. Example: 1.8.1
      *
      * @return the version of this release or null if not found.
      */
@@ -63,7 +64,6 @@ public class VersionUtils {
         return type == EntityType.ARMOR_STAND;
     }
 
-
     public static Collection<? extends Player> getOnlinePlayers() {
         try {
 
@@ -87,9 +87,9 @@ public class VersionUtils {
         }
     }
 
-
     /**
-     * @return 1 if reference > comparison, 0 if reference == comparison, -1 if reference < comparison
+     * @return 1 if reference > comparison, 0 if reference == comparison, -1 if reference <
+     *     comparison
      */
     private static int compare(String reference, String comparison) throws NumberFormatException {
         String[] referenceSplit = reference.split("\\.");
@@ -121,7 +121,6 @@ public class VersionUtils {
         return 0;
     }
 
-
     public static boolean isVersionGreaterEqual(String reference, String thanWhat) {
         return compare(reference, thanWhat) >= 0;
     }
@@ -134,7 +133,6 @@ public class VersionUtils {
         return isVersionGreaterEqual(reference, lowest) && isVersionLessEqual(reference, highest);
     }
 
-
     public static boolean classExists(String className) {
         try {
             Class.forName(className);
@@ -143,5 +141,4 @@ public class VersionUtils {
             return false;
         }
     }
-
 }

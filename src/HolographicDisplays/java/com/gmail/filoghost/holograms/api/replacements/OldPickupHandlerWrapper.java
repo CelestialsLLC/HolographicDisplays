@@ -9,7 +9,8 @@ public class OldPickupHandlerWrapper
     public com.gmail.filoghost.holograms.api.PickupHandler oldHandler;
     private FloatingItem item;
 
-    public OldPickupHandlerWrapper(FloatingItem item, com.gmail.filoghost.holograms.api.PickupHandler oldPickupHandler) {
+    public OldPickupHandlerWrapper(
+            FloatingItem item, com.gmail.filoghost.holograms.api.PickupHandler oldPickupHandler) {
         this.item = item;
         this.oldHandler = oldPickupHandler;
     }

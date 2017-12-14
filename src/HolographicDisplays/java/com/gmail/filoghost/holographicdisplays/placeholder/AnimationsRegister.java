@@ -14,7 +14,7 @@ import java.util.Map;
 public class AnimationsRegister {
 
     // <fileName, lines>
-    private final static Map<String, Placeholder> animations = Utils.newMap();
+    private static final Map<String, Placeholder> animations = Utils.newMap();
 
     public static void loadAnimations(Plugin plugin) {
         animations.clear();
@@ -53,12 +53,20 @@ public class AnimationsRegister {
                 }
 
                 if (!validSpeedFound) {
-                    plugin.getLogger().warning("Could not find a valid 'speed: <number>' in the first line of the file '" + file.getName() + "'. Default speed of 0.5 seconds will be used.");
+                    plugin.getLogger()
+                            .warning(
+                                    "Could not find a valid 'speed: <number>' in the first line of the file '"
+                                            + file.getName()
+                                            + "'. Default speed of 0.5 seconds will be used.");
                 }
 
                 if (lines.isEmpty()) {
                     lines.add("[No lines: " + file.getName() + "]");
-                    plugin.getLogger().warning("Could not find any line in '" + file.getName() + "' (excluding the speed). You should add at least one more line.");
+                    plugin.getLogger()
+                            .warning(
+                                    "Could not find any line in '"
+                                            + file.getName()
+                                            + "' (excluding the speed). You should add at least one more line.");
                 }
 
                 // Replace placeholders.
@@ -66,7 +74,14 @@ public class AnimationsRegister {
                     lines.set(i, StringConverter.toReadableFormat(lines.get(i)));
                 }
 
-                animations.put(file.getName(), new Placeholder(HolographicDisplays.getInstance(), file.getName(), speed, new CyclicPlaceholderReplacer(lines.toArray(new String[lines.size()]))));
+                animations.put(
+                        file.getName(),
+                        new Placeholder(
+                                HolographicDisplays.getInstance(),
+                                file.getName(),
+                                speed,
+                                new CyclicPlaceholderReplacer(
+                                        lines.toArray(new String[lines.size()]))));
                 DebugHandler.handleAnimationLoadSuccess(file.getName(), speed);
 
             } catch (Exception e) {
@@ -76,7 +91,6 @@ public class AnimationsRegister {
         }
     }
 
-
     public static Map<String, Placeholder> getAnimations() {
         return animations;
     }
@@ -84,5 +98,4 @@ public class AnimationsRegister {
     public static Placeholder getAnimation(String name) {
         return animations.get(name);
     }
-
 }

@@ -43,16 +43,35 @@ public class NearCommand extends HologramSubCommand {
         List<NamedHologram> nearHolograms = Utils.newList();
 
         for (NamedHologram hologram : NamedHologramManager.getHolograms()) {
-            if (hologram.getLocation().getWorld().equals(world) && hologram.getLocation().distanceSquared(player.getLocation()) <= radiusSquared) {
+            if (hologram.getLocation().getWorld().equals(world)
+                    && hologram.getLocation().distanceSquared(player.getLocation())
+                    <= radiusSquared) {
                 nearHolograms.add(hologram);
             }
         }
 
-        CommandValidator.isTrue(!nearHolograms.isEmpty(), "There are no holograms in the given radius.");
+        CommandValidator.isTrue(
+                !nearHolograms.isEmpty(), "There are no holograms in the given radius.");
 
         player.sendMessage(Strings.formatTitle("Near holograms"));
         for (NamedHologram nearHologram : nearHolograms) {
-            player.sendMessage(Colors.SECONDARY_SHADOW + "- " + Colors.SECONDARY + Colors.BOLD + nearHologram.getName() + " " + Colors.SECONDARY_SHADOW + "at x: " + (int) nearHologram.getX() + ", y: " + (int) nearHologram.getY() + ", z: " + (int) nearHologram.getZ() + " (lines: " + nearHologram.size() + ")");
+            player.sendMessage(
+                    Colors.SECONDARY_SHADOW
+                            + "- "
+                            + Colors.SECONDARY
+                            + Colors.BOLD
+                            + nearHologram.getName()
+                            + " "
+                            + Colors.SECONDARY_SHADOW
+                            + "at x: "
+                            + (int) nearHologram.getX()
+                            + ", y: "
+                            + (int) nearHologram.getY()
+                            + ", z: "
+                            + (int) nearHologram.getZ()
+                            + " (lines: "
+                            + nearHologram.size()
+                            + ")");
         }
     }
 
@@ -65,5 +84,4 @@ public class NearCommand extends HologramSubCommand {
     public SubCommandType getType() {
         return SubCommandType.GENERIC;
     }
-
 }

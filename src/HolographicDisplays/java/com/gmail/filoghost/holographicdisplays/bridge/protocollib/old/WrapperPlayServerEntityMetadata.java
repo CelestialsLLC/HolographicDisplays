@@ -79,8 +79,9 @@ public class WrapperPlayServerEntityMetadata extends AbstractPacket {
 
     /**
      * Retrieve a list of all the watchable objects.
-     * <p>
-     * This can be converted to a data watcher using {@link WrappedDataWatcher#WrappedDataWatcher(List) WrappedDataWatcher(List)}
+     *
+     * <p>This can be converted to a data watcher using {@link
+     * WrappedDataWatcher#WrappedDataWatcher(List) WrappedDataWatcher(List)}
      *
      * @return The current metadata
      */

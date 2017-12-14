@@ -14,28 +14,31 @@ public class ReflectionUtils {
     private static boolean stackTraceErrorPrinted;
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static void putInPrivateStaticMap(Class<?> clazz, String fieldName, Object key, Object value) throws Exception {
+    public static void putInPrivateStaticMap(
+            Class<?> clazz, String fieldName, Object key, Object value) throws Exception {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
         Map map = (Map) field.get(null);
         map.put(key, value);
     }
 
-    public static void setPrivateField(Class<?> clazz, Object handle, String fieldName, Object value) throws Exception {
+    public static void setPrivateField(
+            Class<?> clazz, Object handle, String fieldName, Object value) throws Exception {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
         field.set(handle, value);
     }
 
-    public static Object getPrivateField(Class<?> clazz, Object handle, String fieldName) throws Exception {
+    public static Object getPrivateField(Class<?> clazz, Object handle, String fieldName)
+            throws Exception {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
         return field.get(handle);
     }
 
     /**
-     * If you only need one stack trace element this is faster than Throwable.getStackTrace()[element],
-     * it doesn't generate the full stack trace.
+     * If you only need one stack trace element this is faster than
+     * Throwable.getStackTrace()[element], it doesn't generate the full stack trace.
      */
     public static StackTraceElement getStackTraceElement(int index) {
         try {
@@ -43,11 +46,13 @@ public class ReflectionUtils {
 
             try {
                 if (getStackTraceElementMethod == null) {
-                    getStackTraceElementMethod = Throwable.class.getDeclaredMethod("getStackTraceElement", int.class);
+                    getStackTraceElementMethod =
+                            Throwable.class.getDeclaredMethod("getStackTraceElement", int.class);
                     getStackTraceElementMethod.setAccessible(true);
                 }
                 if (getStackTraceDepthMethod == null) {
-                    getStackTraceDepthMethod = Throwable.class.getDeclaredMethod("getStackTraceDepth");
+                    getStackTraceDepthMethod =
+                            Throwable.class.getDeclaredMethod("getStackTraceDepth");
                     getStackTraceDepthMethod.setAccessible(true);
                 }
             } catch (NoSuchMethodException e) {
@@ -64,7 +69,8 @@ public class ReflectionUtils {
                 int depth = (Integer) getStackTraceDepthMethod.invoke(dummyThrowable);
 
                 if (index < depth) {
-                    return (StackTraceElement) getStackTraceElementMethod.invoke(new Throwable(), index);
+                    return (StackTraceElement)
+                            getStackTraceElementMethod.invoke(new Throwable(), index);
                 } else {
                     return null;
                 }
@@ -72,11 +78,15 @@ public class ReflectionUtils {
 
         } catch (Throwable t) {
             if (!stackTraceErrorPrinted) {
-                HolographicDisplays.getInstance().getLogger().log(Level.WARNING, "Unable to get a stacktrace element, please inform the developer. You will only see this error once to avoid spam.", t);
+                HolographicDisplays.getInstance()
+                        .getLogger()
+                        .log(
+                                Level.WARNING,
+                                "Unable to get a stacktrace element, please inform the developer. You will only see this error once to avoid spam.",
+                                t);
                 stackTraceErrorPrinted = true;
             }
             return null;
         }
     }
-
 }
